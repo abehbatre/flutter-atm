@@ -1,0 +1,52 @@
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 15 20"
+    id="vector">
+    <g
+        id="group_4"
+        transform="translate(-3 -2)">
+        <path
+            id="path_10"
+            d="M 0 0 L 21.6 0 L 21.6 24 L 0 24 L 0 0 Z"
+            fill="none"
+            stroke-width="1"
+            fill-rule="evenodd"/>
+        <g
+            id="group_3"
+            transform="translate(3 2)">
+            <path
+                id="path_11"
+                d="M 1.227 0 C 0.552 0 0 0.563 0 1.25 L 0 18.75 C 0 19.438 0.552 20 1.227 20 L 13.5 20 C 14.175 20 14.727 19.438 14.727 18.75 L 14.727 5 L 9.818 0 L 1.227 0 Z"
+                fill="#e2e5e7"
+                stroke-width="1"/>
+            <path
+                id="path_12"
+                d="M 11.045 5 L 14.727 5 L 9.818 0 L 9.818 3.75 C 9.818 4.438 10.37 5 11.045 5 Z"
+                fill="#b0b7bd"
+                stroke-width="1"/>
+            <path
+                id="path_13"
+                d="M 14.727 8.75 L 11.045 5 L 14.727 5 Z"
+                fill="#cad1d8"
+                stroke-width="1"/>
+            <path
+                id="path_14"
+                d="M 2.082 8 L 12.082 8 Q 12.582 8 12.582 8.5 L 12.582 8.5 Q 12.582 9 12.082 9 L 2.082 9 Q 1.582 9 1.582 8.5 L 1.582 8.5 Q 1.582 8 2.082 8 Z"
+                fill="#b0b7bd"
+                stroke-width="1"
+                fill-rule="evenodd"/>
+            <path
+                id="path_15"
+                d="M 2.082 11 L 12.082 11 Q 12.582 11 12.582 11.5 L 12.582 11.5 Q 12.582 12 12.082 12 L 2.082 12 Q 1.582 12 1.582 11.5 L 1.582 11.5 Q 1.582 11 2.082 11 Z"
+                fill="#b0b7bd"
+                stroke-width="1"
+                fill-rule="evenodd"/>
+            <path
+                id="path_16"
+                d="M 2.082 14 L 12.082 14 Q 12.582 14 12.582 14.5 L 12.582 14.5 Q 12.582 15 12.082 15 L 2.082 15 Q 1.582 15 1.582 14.5 L 1.582 14.5 Q 1.582 14 2.082 14 Z"
+                fill="#b0b7bd"
+                stroke-width="1"
+                fill-rule="evenodd"/>
+        </g>
+    </g>
+</svg>

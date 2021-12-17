@@ -1,0 +1,39 @@
+name: ex_reusable
+description: all reusable widget, util, extension, etc.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+
+dependencies:
+  # sort by asc
+  cupertino_icons: ^1.0.3
+  dartx: ^0.7.1
+  device_info: ^2.0.2
+  extended_image: ^4.1.0
+  intl: ^0.17.0
+  logger: ^1.0.0
+  velocity_x: ^3.3.0
+  flutter_svg: ^0.22.0
+  pull_to_refresh: ^2.0.0
+  table_calendar: ^3.0.1
+  flutter_image_compress: ^1.1.0
+  lottie: ^1.2.1
+
+  flutter:
+    sdk: flutter
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  fonts:
+    - family: ExIcons
+      fonts:
+        - asset: assets/fonts/ExIcons.ttf
+
+  uses-material-design: true
