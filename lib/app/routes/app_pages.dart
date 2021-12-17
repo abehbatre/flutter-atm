@@ -23,11 +23,13 @@ class AppPages {
 
   static final routes = [
     // STARTER
-    GetPage(
-      name: _Paths.ROOT,
-      page: () => pref.read(PREF_IS_LOGIN) == null ? OnBoardingView() : DashboardView(),
-      binding: pref.read(PREF_IS_LOGIN) == null ? OnBoardingBinding() : DashboardBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.ROOT,
+    //   page: () => pref.read(PREF_IS_LOGIN) == null ? OnBoardingView() : DashboardView(),
+    //   binding: pref.read(PREF_IS_LOGIN) == null ? OnBoardingBinding() : DashboardBinding(),
+    // ),
+    GetPage(name: _Paths.ROOT, page: () => OnBoardingView(), binding: OnBoardingBinding()),
+
 
     GetPage(name: _Paths.ON_BOARDING, page: () => OnBoardingView(), binding: OnBoardingBinding()),
     GetPage(name: _Paths.LOGIN, page: () => LoginView(), binding: LoginBinding()),

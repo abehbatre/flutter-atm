@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:ex_reusable/ex_reusable.dart';
+import 'package:flutter_atm/app/common/exception/exception.dart';
 import 'package:get/get.dart' hide Value;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -118,8 +119,12 @@ class MyDatabase extends _$MyDatabase {
         );
         await createOrUpdateTransactionLog(log);
       } catch (e) {
-        Get.snackbar('ERROR', '$e');
-        logE("deposit : $e");
+        if (e is LocalException) {
+          Get.snackbar('ERROR', '${e.message}');
+        } else {
+          Get.snackbar('ERROR', '$e');
+          logE("deposit : $e");
+        }
       }
     });
   }
@@ -137,7 +142,7 @@ class MyDatabase extends _$MyDatabase {
       try {
         // validasi
         if (user.balance - amount < 0) {
-          Get.snackbar('Gagal', 'Saldo anda tidak cukup');
+          throw LocalException('Saldo anda tidak cukup');
           return;
         }
 
@@ -162,8 +167,12 @@ class MyDatabase extends _$MyDatabase {
         );
         await createOrUpdateTransactionLog(log);
       } catch (e) {
-        Get.snackbar('ERROR', '$e');
-        logE("withdraw : $e");
+        if (e is LocalException) {
+          Get.snackbar('ERROR', '${e.message}');
+        } else {
+          Get.snackbar('ERROR', '$e');
+          logE("withdraw : $e");
+        }
       }
     });
   }
@@ -182,8 +191,7 @@ class MyDatabase extends _$MyDatabase {
       try {
         // validasi
         if (userOwner.balance - amount < 0) {
-          Get.snackbar('Gagal', 'Saldo anda tidak cukup');
-          return;
+          throw LocalException('Saldo anda tidak cukup');
         }
 
         // update current user balance ----
@@ -211,8 +219,12 @@ class MyDatabase extends _$MyDatabase {
         );
         await createOrUpdateTransactionLog(log);
       } catch (e) {
-        Get.snackbar('ERROR', '$e');
-        logE("transfer : $e");
+        if (e is LocalException) {
+          Get.snackbar('ERROR', '${e.message}');
+        } else {
+          Get.snackbar('ERROR', '$e');
+          logE("transfer : $e");
+        }
       }
     });
   }

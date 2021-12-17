@@ -1,4 +1,3 @@
-import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter_atm/app/common/lifecycle/_index.dart';
 import 'package:flutter_atm/app/constants/_shared_preference_key.dart';
 import 'package:flutter_atm/app/repository/local/database.dart';

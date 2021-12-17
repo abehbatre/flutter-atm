@@ -29,7 +29,7 @@ class LoginController extends BaseController {
     _validation(() async {
       // GET_USER
       db.getUserByUsername(tfUserName.text).listen((event) {
-        pref.write(PREF_IS_LOGIN, true);
+        // pref.write(PREF_IS_LOGIN, true);
         pref.write(PREF_CURRENT_USER, tfUserName.text);
         Get.offAndToNamed(Routes.DASHBOARD);
       }).onError((e) async {
@@ -40,7 +40,7 @@ class LoginController extends BaseController {
           createAt: DateTime.now(),
         );
         await db.createUser(user).then((value) {
-          pref.write(PREF_IS_LOGIN, true);
+          // pref.write(PREF_IS_LOGIN, true);
           pref.write(PREF_CURRENT_USER, tfUserName.text);
           Get.offAndToNamed(Routes.DASHBOARD);
         });

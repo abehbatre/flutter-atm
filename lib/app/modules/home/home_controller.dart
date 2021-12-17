@@ -63,10 +63,10 @@ class HomeController extends BaseController with StateMixin<int> {
 
   _getUserMenu() async {
     var listMenu = [
-      {"id": 101, "icon": "assets/images/menu_home_1.png", "label": "DEPOSIT", "badge": false},
-      {"id": 102, "icon": "assets/images/menu_home_2.png", "label": "WITHDRAW", "badge": false},
-      {"id": 103, "icon": "assets/images/menu_home_3.png", "label": "TRANSFER", "badge": false},
-      {"id": 104, "icon": "assets/images/menu_home_3.png", "label": "DAFTAR MUTASI", "badge": false},
+      {"id": MENU_DEPOSIT, "icon": "assets/images/menu_home_1.png", "label": "DEPOSIT", "badge": false},
+      {"id": MENU_WITHDRAW, "icon": "assets/images/menu_home_2.png", "label": "WITHDRAW", "badge": false},
+      {"id": MENU_TRANSFER, "icon": "assets/images/menu_home_3.png", "label": "TRANSFER", "badge": false},
+      {"id": MENU_MUTATION, "icon": "assets/images/menu_home_3.png", "label": "DAFTAR MUTASI", "badge": false},
     ];
     menuList.assignAll(listMenu);
   }

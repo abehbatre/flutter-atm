@@ -13,14 +13,6 @@ import 'picker_widgets.dart';
 ///  write all methods which will be used on controller !
 
 abstract class BaseController extends GetxController with CommonWidgets, PickerWidgets {
-  // COMMON VARIABLE
-  final _error = ''.obs;
-  get error => _error.value;
-  set error(val) => _error.value = val;
-
-  final _isLoading = true.obs;
-  get isLoading => _isLoading.value;
-  set isLoading(val) => _isLoading.value = val;
 
   // DATABASE
   final db = Get.find<MyDatabase>();
