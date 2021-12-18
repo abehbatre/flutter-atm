@@ -12,9 +12,8 @@ class TransferView extends GetView<TransferController> {
     return Scaffold(
       appBar: AppBar(title: 'Transfer'.text.black.make(), centerTitle: false),
       body: VStack([
-
         'Saldo Anda'.text.color(colorBlack).bold.size(20).make().marginOnly(bottom: 16),
-        Obx(() => 'Rp. ${rupiahFormat(controller.dataUser.value.balance)}'.text.make()),
+        Obx(() => '${rupiahFormat(controller.dataUser.value.balance)}'.text.make()),
         16.heightBox,
         'Kirim Ke'.text.color(colorBlack).bold.size(20).make().marginOnly(bottom: 16),
         Container(
@@ -26,7 +25,18 @@ class TransferView extends GetView<TransferController> {
           ]).p12(),
         ).onInkTap(() => controller.showBottomListUser()),
         24.heightBox,
-        ExTextFieldLabeled(tfController: controller.tfInput, label: 'Masukkan nilai transfer', hint: 'Rp.1.000.0000'),
+        ExTextFieldLabeled(
+          tfController: controller.tfInput,
+          label: 'Masukkan nilai transfer',
+          hint: 'Rp.1.000.0000',
+          onChanged: (value) => controller.update(),
+        ),
+        8.heightBox,
+        GetBuilder<TransferController>(
+          builder: (controller) {
+            return controller.tfInput.text.isNotBlank ? '${rupiahFormat(double.parse(controller.tfInput.text))}'.text.make() : 0.heightBox;
+          },
+        ),
       ]).p24().scrollVertical(),
       bottomSheet: VStack([
         ExButtonOutline(

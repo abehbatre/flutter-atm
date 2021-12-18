@@ -68,10 +68,12 @@ dev_dependencies:
   flutter_launcher_icons: ^0.9.2
   drift_dev: ^1.0.2
   build_runner: ^2.1.5
-#  very_good_analysis: ^2.4.0
 
-
+  #  TEST
+  test: any
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
 
 flutter_icons:

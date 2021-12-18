@@ -49,7 +49,7 @@ class HomeView extends GetView<HomeController> {
         // 16.widthBox,
       ]),
       VStack([
-        '${controller.dataUser.value.username}'.text.size(18).bold.uppercase.make(),
+        Obx(() => '${controller.dataUser.value.username}'.text.size(18).bold.uppercase.make()),
       ]),
       24.heightBox,
     ]);
@@ -108,7 +108,7 @@ class HomeView extends GetView<HomeController> {
           child: VStack([
             Spacer(),
             'Saldo anda:'.text.size(16).bold.make().marginOnly(bottom: 4),
-            'Rp. ${rupiahFormat(controller.dataUser.value.balance)}'.text.make(),
+            '${rupiahFormat(controller.dataUser.value.balance)}'.text.make(),
             Spacer(),
           ]),
         )

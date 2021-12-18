@@ -35,8 +35,8 @@ class ProfileView extends GetView<ProfileController> {
         child: VStack([
           buildSection('Info & Bantuan'),
           buildMenuButton(title: 'Tentang Aplikasi', textColor: greenOnlineColor),
-          buildMenuButton(title: 'Pusat Bantuan'),
-          buildMenuButton(title: 'Dev Tool', textColor: greenOnlineColor),
+          buildMenuButton(title: 'Pusat Bantuan', onClick: () => controller.test()),
+          buildMenuButton(title: 'RESET DB', textColor: Vx.red500,onClick: () => controller.resetDB()),
           24.heightBox,
           buildMenuButton(title: 'Keluar', textColor: colorPrimary, onClick: () => controller.logout()),
           40.heightBox,
@@ -91,7 +91,7 @@ class ProfileView extends GetView<ProfileController> {
             Obx(() => '${controller.dataUser.value.username}'.text.white.uppercase.size(18).bold.make()),
             4.heightBox,
             '${faker.job.title()}'.text.white.uppercase.make(),
-          ]),
+          ]).expand(),
         ]),
       ]).p24(),
     );

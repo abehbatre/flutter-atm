@@ -9,10 +9,7 @@ import '../home/home_view.dart';
 class DashboardController extends BaseController {
   final bottomNavigationController = PersistentTabController(initialIndex: 0);
 
-  final pageList = <Widget>[
-    HomeView(),
-    ProfileView(),
-  ];
+  final pageList = <Widget>[HomeView(), ProfileView()];
 
   @override
   void onInit() {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 ///   created               : Aditya Pratama
@@ -24,10 +22,12 @@ class ExTextFieldLabeled extends StatelessWidget {
     required this.label,
     this.labelSize,
     this.keyboardType,
+    this.onChanged,
   }) : super(key: key);
 
   final TextEditingController? tfController;
   final ValueChanged<String>? onSubmitted;
+  final ValueChanged<String>? onChanged;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
 
@@ -44,16 +44,11 @@ class ExTextFieldLabeled extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: borderColor ?? const Color(0xFFe4e8eb),),
+        border: Border.all(
+          color: borderColor ?? const Color(0xFFe4e8eb),
+        ),
         borderRadius: BorderRadius.circular(borderRadius ?? 11),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.white54,
-              blurRadius: 5,
-              spreadRadius: 10,
-              offset: Offset(0.00, 0.55)
-          )
-        ],
+        boxShadow: <BoxShadow>[BoxShadow(color: Colors.white54, blurRadius: 5, spreadRadius: 10, offset: Offset(0.00, 0.55))],
       ),
       child: VStack([
         "$label".text.size(labelSize ?? 13).color(Color(0xff9fa5aa)).make(),
@@ -67,6 +62,7 @@ class ExTextFieldLabeled extends StatelessWidget {
           textInputAction: textInputAction,
           keyboardType: keyboardType,
           controller: tfController,
+          onChanged:(value) =>  onChanged!(value),
           onSubmitted: onSubmitted,
         ),
       ]).pOnly(top: 16, left: 16, bottom: 8, right: 16),

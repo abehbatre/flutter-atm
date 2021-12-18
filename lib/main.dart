@@ -1,10 +1,8 @@
+import 'package:drift/native.dart';
 import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_atm/app/modules/home/home_controller.dart';
-import 'package:flutter_atm/app/modules/profile/profile_controller.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'app/common/resource/_index.dart';
 import 'app/repository/local/database.dart';
@@ -21,6 +19,8 @@ Future main() async {
   await _injectDependency();
   logI('All Dependency is ready...');
 
+  Get.find<MyDatabase>().populateUser(); // populate user
+
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   ).then((value) => runApp(MyApp()));
@@ -30,9 +30,7 @@ Future main() async {
 Future<void> _injectDependency() async {
   // Services are injected only when needed .
   // Get.lazyPut<HttpService>(() => HttpService());
-  Get.put<MyDatabase>(MyDatabase(), permanent: true);
-  Get.put<HomeController>(HomeController(), permanent: true);
-  Get.put<ProfileController>(ProfileController(), permanent: true);
+  Get.put<MyDatabase>(MyDatabase(NativeDatabase.memory()), permanent: true);
 }
 
 
@@ -49,6 +47,7 @@ class MyApp extends StatelessWidget {
       // translations: AppTranslations(),
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
+      defaultTransition: Transition.fadeIn,
     );
   }
 }

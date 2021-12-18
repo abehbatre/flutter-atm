@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -6,6 +7,7 @@ import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter_atm/app/common/exception/exception.dart';
 import 'package:flutter_atm/app/common/resource/_index.dart';
 import 'package:get/get.dart' hide Value;
+import 'package:mock_data/mock_data.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:random_string/random_string.dart';
@@ -36,6 +38,7 @@ class Users extends Table {
 
 class TransactionLogs extends Table {
   IntColumn get id => integer().autoIncrement()(); // pk
+  TextColumn get username => text().withLength(min: 6, max: 32)();
   TextColumn get from => text()();
   TextColumn get to => text()();
   RealColumn get amount => real()();
@@ -57,11 +60,11 @@ LazyDatabase _openConnection() {
 
 @DriftDatabase(tables: [Users, TransactionLogs])
 class MyDatabase extends _$MyDatabase {
-  MyDatabase() : super(_openConnection());
+  // MyDatabase() : super(_openConnection());
+  MyDatabase(NativeDatabase nativeDatabase) : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
-
 
   // —————————————————————————————————————————————————————————————————————————————
   // Table Users
@@ -73,16 +76,27 @@ class MyDatabase extends _$MyDatabase {
   Future<int> deleteUser(User entry) => delete(users).delete(entry);
   Future<int> deleteAllUser() async => delete<Table, dynamic>(users).go();
 
+  Stream<QueryRow> countUsers() {
+    return customSelect('SELECT COUNT(*) FROM users',
+      readsFrom: {users},
+    ).watchSingle();
+  }
+
   // —————————————————————————————————————————————————————————————————————————
   // Table TransactionLogs
   // —————————————————————————————————————————————————————————————————————————
   Future<int> createTransactionLog(TransactionLogsCompanion entry) => into(transactionLogs).insert(entry);
   Future<int> createOrUpdateTransactionLog(TransactionLog entry) => into(transactionLogs).insertOnConflictUpdate(entry);
-  Future<List<TransactionLog>> getListTransactionLogByUsername(String username) => (select(transactionLogs)..where((t) => t.from.equals(username))).get();
+  Future<List<TransactionLog>> getListTransactionLogByUsername(String username) {
+    return (select(transactionLogs)
+          ..where((t) => t.username.equals(username))
+          ..orderBy([(t) => OrderingTerm.desc(t.createAt)]))
+        .get();
+  }
+
   Stream<TransactionLog> getTransactionLogById(int id) => (select(transactionLogs)..where((t) => t.id.equals(id))).watchSingle();
   Future<int> deleteTransactionLog(TransactionLog entry) => delete(transactionLogs).delete(entry);
   Future<int> deleteAllTransactionLog() async => delete<Table, dynamic>(transactionLogs).go();
-
 
   // —————————————————————————————————————————————————————————————————————————
   // action
@@ -100,18 +114,14 @@ class MyDatabase extends _$MyDatabase {
     return transaction(() async {
       try {
         // update current user balance
-        await customUpdate(
-          'UPDATE users SET balance = ? WHERE username = ?',
-          updates: {users},
-          variables: [
-            Variable.withReal((user.balance + amount)),
-            Variable.withString(user.username),
-          ],
-        );
+        await (update(users)..where((tbl) => tbl.username.equals(user.username))).write(UsersCompanion(
+          balance: Value(user.balance + amount),
+        ));
 
         // insert to transactionLog
         var log = TransactionLog(
           id: randomBetween(100, 123456789),
+          username: user.username,
           from: user.username,
           to: user.username,
           amount: amount,
@@ -119,7 +129,14 @@ class MyDatabase extends _$MyDatabase {
           createAt: DateTime.now(),
         );
         await createOrUpdateTransactionLog(log);
-        Get.snackbar('Sukses', 'berhasil deposit sebesar Rp. ${rupiahFormat(amount)}', backgroundColor: greenOnlineColor, colorText: colorWhite,);
+        Get.snackbar(
+          'Sukses',
+          'berhasil deposit sebesar ${rupiahFormat(amount)}',
+          backgroundColor: Color(0x8A2E7D32),
+          barBlur: 8.0,
+          colorText: colorWhite,
+        );
+        logW("deposit : [$user, $amount]");
       } catch (e) {
         if (e is LocalException) {
           Get.snackbar('ERROR', '${e.message}');
@@ -160,14 +177,21 @@ class MyDatabase extends _$MyDatabase {
         // insert to transactionLog
         var log = TransactionLog(
           id: randomBetween(100, 123456789),
+          username: user.username,
           from: user.username,
           to: user.username,
           amount: amount,
-          description: 'deposit',
+          description: 'withdraw',
           createAt: DateTime.now(),
         );
         await createOrUpdateTransactionLog(log);
-        Get.snackbar('Sukses', 'berhasil withdraw sebesar Rp. ${rupiahFormat(amount)}', backgroundColor: greenOnlineColor, colorText: colorWhite);
+        Get.snackbar(
+          'Sukses',
+          'berhasil withdraw sebesar ${rupiahFormat(amount)}',
+          backgroundColor: Color(0x8A2E7D32),
+          barBlur: 8.0,
+          colorText: colorWhite,
+        );
       } catch (e) {
         if (e is LocalException) {
           Get.snackbar('ERROR', '${e.message}');
@@ -210,9 +234,10 @@ class MyDatabase extends _$MyDatabase {
           variables: [Variable.withReal((userTarget.balance + amount)), Variable.withString(userTarget.username)],
         );
 
-        // insert to transactionLog
+        // insert to transactionLog <current user>
         var log = TransactionLog(
           id: randomBetween(100, 123456789),
+          username: userOwner.username,
           from: userOwner.username,
           to: userTarget.username,
           amount: amount,
@@ -220,7 +245,26 @@ class MyDatabase extends _$MyDatabase {
           createAt: DateTime.now(),
         );
         await createOrUpdateTransactionLog(log);
-        Get.snackbar('Sukses', 'berhasil transfer ke ${userTarget.username} sebesar Rp. ${rupiahFormat(amount)}', backgroundColor: greenOnlineColor, colorText: colorWhite);
+
+        // insert to transactionLog <target user>
+        var log2 = TransactionLog(
+          id: randomBetween(100, 123456789),
+          username: userTarget.username,
+          from: userOwner.username,
+          to: userTarget.username,
+          amount: amount,
+          description: 'transfer',
+          createAt: DateTime.now(),
+        );
+        await createOrUpdateTransactionLog(log2);
+
+        Get.snackbar(
+          'Sukses',
+          'berhasil transfer ke ${userTarget.username} sebesar ${rupiahFormat(amount)}',
+          backgroundColor: Color(0x8A2E7D32),
+          barBlur: 8.0,
+          colorText: colorWhite,
+        );
       } catch (e) {
         if (e is LocalException) {
           Get.snackbar('ERROR', '${e.message}');
@@ -230,5 +274,35 @@ class MyDatabase extends _$MyDatabase {
         }
       }
     });
+  }
+
+  Future<void> populateUser() async {
+    // Step :
+    // - only run this process when data = 0
+    // - populate data
+
+    try {
+      var totalData = 0;
+      await countUsers.call().listen((event) async {
+        totalData = event.data.values.toList()[0];
+        // only run this process when data < 1
+        if (totalData < 1) { // populate data
+          await batch((batch) {
+            for (int i = 0; i < 4; i++) {
+              batch.insertAll(users, [
+                UsersCompanion.insert(username: '${mockName().toLowerCase()}${randomBetween(100, 1000)}', balance: 0, createAt: DateTime.now()),
+              ]);
+            }
+          });
+        }
+
+      });
+
+
+
+
+    } catch (e) {
+      logW("populateUser : $e");
+    }
   }
 }

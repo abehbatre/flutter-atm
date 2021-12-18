@@ -1,7 +1,8 @@
+import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter_atm/app/common/lifecycle/_index.dart';
-import 'package:flutter_atm/app/constants/_shared_preference_key.dart';
 import 'package:flutter_atm/app/repository/local/database.dart';
 import 'package:get/get.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class MutationController extends BaseController with StateMixin<int> {
   final listMutation = <TransactionLog>[].obs;
@@ -26,11 +27,40 @@ class MutationController extends BaseController with StateMixin<int> {
     );
   }
 
+  showDetail(TransactionLog data) {
+    if (data.description.contains('transfer')) {
+      bottomSheetContentDialog(
+        title: 'Detail Transaksi',
+        childrenWidget: VStack([
+          'Waktu transaksi : ${data.createAt.toStringEx(format: 'dd MMM yyyy | HH:mm')}'.text.make(),
+          8.heightBox,
+          'dari : ${data.from}'.text.make(),
+          'ke : ${data.to}'.text.make(),
+          8.heightBox,
+          'jumlah : ${rupiahFormat(data.amount)}'.text.make(),
+          16.heightBox,
+
+        ]),
+      );
+    } else {
+      bottomSheetContentDialog(
+        title: 'Detail Transaksi',
+        childrenWidget: VStack([
+          'Waktu transaksi : ${data.createAt.toStringEx(format: 'dd MMM yyyy | HH:mm')}'.text.make(),
+          8.heightBox,
+          'Jumlah : ${rupiahFormat(data.amount)}'.text.make(),
+          16.heightBox,
+        ]),
+      );
+    }
+
+  }
+
   // —————————————————————————————————————————————————————————————————————————
   // Private Func
   // —————————————————————————————————————————————————————————————————————————
   _getListTransactionLog() async {
-    var currentUser = pref.read(PREF_CURRENT_USER);
+    var currentUser = Get.arguments;
     await db.getListTransactionLogByUsername(currentUser).then((value) {
       if (value.length == 0) {
         change(0, status: RxStatus.empty());
@@ -39,7 +69,7 @@ class MutationController extends BaseController with StateMixin<int> {
         change(200, status: RxStatus.success());
       }
     }).catchError((e) {
-      snackBarError(message: '$e');
+      change(0, status: RxStatus.empty());
     });
   }
 }

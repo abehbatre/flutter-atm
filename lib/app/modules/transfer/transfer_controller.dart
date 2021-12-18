@@ -21,17 +21,17 @@ class TransferController extends BaseController {
     var listKV = <KeyVal>[];
     listUsers.forEach((element) {
       // exclude current user >> todo : fix me, this ugly way.
-      if (element.username != dataUser.value.username) {
+      if (element.username != Get.arguments) {
         listKV.add(KeyVal(key: element, val: element.username));
       }
     });
     bottomSheetListDialog(
         listKV: listKV,
         title: 'Daftar Pengguna',
+        emptyMessage: 'belum ada data.',
         callback: (k, v) {
           currentSelectedUserObject.value = k;
           currentSelectedUserString.value = v;
-
         });
   }
 
@@ -65,6 +65,11 @@ class TransferController extends BaseController {
     }
     if (tfInput.text.isBlank!) {
       snackBarError(message: 'jumlah transfer harus dimasukkan');
+      return;
+    }
+
+    if (double.parse(tfInput.text) <= 0) {
+      snackBarError(message: 'jumlah transfer tidak boleh 0');
       return;
     }
     onNext.call();

@@ -1,5 +1,4 @@
 import 'package:ex_reusable/ex_reusable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_atm/app/common/resource/_index.dart';
 import 'package:get/get.dart';

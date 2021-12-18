@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 ///   created               : Fadqurrosyidik
 ///   originalFilename      : ex_sticky_scroll_view

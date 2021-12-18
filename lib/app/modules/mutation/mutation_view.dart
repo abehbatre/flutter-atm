@@ -2,9 +2,9 @@ import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_atm/app/common/resource/_index.dart';
 import 'package:get/get.dart';
-import 'package:mock_data/mock_data.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'item_mutation.dart';
 import 'mutation_controller.dart';
 
 class MutationView extends GetView<MutationController> {
@@ -35,24 +35,15 @@ class MutationView extends GetView<MutationController> {
         child: Obx(
           () => ListView.builder(
             itemCount: controller.listMutation.length,
-            itemBuilder: (context, index) => buildItem(controller, index),
+            itemBuilder: (context, index) => ItemMutation(
+              controller: controller,
+              i: index,
+              itemClick: (data) => controller.showDetail(data),
+            ),
           ),
         ),
       ),
       24.heightBox,
     ]);
-  }
-
-  Widget buildItem(MutationController controller, i) {
-    return Container(
-      decoration: controller.commonBoxDecoration(),
-      child: VStack([
-        'Waktu: ${controller.listMutation[i].createAt}'.text.make(),
-        'Deskripsi: ${controller.listMutation[i].description}'.text.make(),
-        8.heightBox,
-        'Amount: Rp. ${rupiahFormat(controller.listMutation[i].amount)}'.text.make(),
-        'Referensi: ${mockUUID()}'.text.make(),
-      ]).p12(),
-    ).pOnly(top: 8, bottom: 8);
   }
 }

@@ -218,6 +218,7 @@ class $UsersTable extends Users with TableInfo<$UsersTable, User> {
 
 class TransactionLog extends DataClass implements Insertable<TransactionLog> {
   final int id;
+  final String username;
   final String from;
   final String to;
   final double amount;
@@ -225,6 +226,7 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
   final DateTime createAt;
   TransactionLog(
       {required this.id,
+      required this.username,
       required this.from,
       required this.to,
       required this.amount,
@@ -235,6 +237,8 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
     return TransactionLog(
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      username: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}username'])!,
       from: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}from'])!,
       to: const StringType()
@@ -251,6 +255,7 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
+    map['username'] = Variable<String>(username);
     map['from'] = Variable<String>(from);
     map['to'] = Variable<String>(to);
     map['amount'] = Variable<double>(amount);
@@ -262,6 +267,7 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
   TransactionLogsCompanion toCompanion(bool nullToAbsent) {
     return TransactionLogsCompanion(
       id: Value(id),
+      username: Value(username),
       from: Value(from),
       to: Value(to),
       amount: Value(amount),
@@ -275,6 +281,7 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TransactionLog(
       id: serializer.fromJson<int>(json['id']),
+      username: serializer.fromJson<String>(json['username']),
       from: serializer.fromJson<String>(json['from']),
       to: serializer.fromJson<String>(json['to']),
       amount: serializer.fromJson<double>(json['amount']),
@@ -287,6 +294,7 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
+      'username': serializer.toJson<String>(username),
       'from': serializer.toJson<String>(from),
       'to': serializer.toJson<String>(to),
       'amount': serializer.toJson<double>(amount),
@@ -297,6 +305,7 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
 
   TransactionLog copyWith(
           {int? id,
+          String? username,
           String? from,
           String? to,
           double? amount,
@@ -304,6 +313,7 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
           DateTime? createAt}) =>
       TransactionLog(
         id: id ?? this.id,
+        username: username ?? this.username,
         from: from ?? this.from,
         to: to ?? this.to,
         amount: amount ?? this.amount,
@@ -314,6 +324,7 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
   String toString() {
     return (StringBuffer('TransactionLog(')
           ..write('id: $id, ')
+          ..write('username: $username, ')
           ..write('from: $from, ')
           ..write('to: $to, ')
           ..write('amount: $amount, ')
@@ -324,12 +335,14 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
   }
 
   @override
-  int get hashCode => Object.hash(id, from, to, amount, description, createAt);
+  int get hashCode =>
+      Object.hash(id, username, from, to, amount, description, createAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TransactionLog &&
           other.id == this.id &&
+          other.username == this.username &&
           other.from == this.from &&
           other.to == this.to &&
           other.amount == this.amount &&
@@ -339,6 +352,7 @@ class TransactionLog extends DataClass implements Insertable<TransactionLog> {
 
 class TransactionLogsCompanion extends UpdateCompanion<TransactionLog> {
   final Value<int> id;
+  final Value<String> username;
   final Value<String> from;
   final Value<String> to;
   final Value<double> amount;
@@ -346,6 +360,7 @@ class TransactionLogsCompanion extends UpdateCompanion<TransactionLog> {
   final Value<DateTime> createAt;
   const TransactionLogsCompanion({
     this.id = const Value.absent(),
+    this.username = const Value.absent(),
     this.from = const Value.absent(),
     this.to = const Value.absent(),
     this.amount = const Value.absent(),
@@ -354,18 +369,21 @@ class TransactionLogsCompanion extends UpdateCompanion<TransactionLog> {
   });
   TransactionLogsCompanion.insert({
     this.id = const Value.absent(),
+    required String username,
     required String from,
     required String to,
     required double amount,
     required String description,
     required DateTime createAt,
-  })  : from = Value(from),
+  })  : username = Value(username),
+        from = Value(from),
         to = Value(to),
         amount = Value(amount),
         description = Value(description),
         createAt = Value(createAt);
   static Insertable<TransactionLog> custom({
     Expression<int>? id,
+    Expression<String>? username,
     Expression<String>? from,
     Expression<String>? to,
     Expression<double>? amount,
@@ -374,6 +392,7 @@ class TransactionLogsCompanion extends UpdateCompanion<TransactionLog> {
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (username != null) 'username': username,
       if (from != null) 'from': from,
       if (to != null) 'to': to,
       if (amount != null) 'amount': amount,
@@ -384,6 +403,7 @@ class TransactionLogsCompanion extends UpdateCompanion<TransactionLog> {
 
   TransactionLogsCompanion copyWith(
       {Value<int>? id,
+      Value<String>? username,
       Value<String>? from,
       Value<String>? to,
       Value<double>? amount,
@@ -391,6 +411,7 @@ class TransactionLogsCompanion extends UpdateCompanion<TransactionLog> {
       Value<DateTime>? createAt}) {
     return TransactionLogsCompanion(
       id: id ?? this.id,
+      username: username ?? this.username,
       from: from ?? this.from,
       to: to ?? this.to,
       amount: amount ?? this.amount,
@@ -404,6 +425,9 @@ class TransactionLogsCompanion extends UpdateCompanion<TransactionLog> {
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<int>(id.value);
+    }
+    if (username.present) {
+      map['username'] = Variable<String>(username.value);
     }
     if (from.present) {
       map['from'] = Variable<String>(from.value);
@@ -427,6 +451,7 @@ class TransactionLogsCompanion extends UpdateCompanion<TransactionLog> {
   String toString() {
     return (StringBuffer('TransactionLogsCompanion(')
           ..write('id: $id, ')
+          ..write('username: $username, ')
           ..write('from: $from, ')
           ..write('to: $to, ')
           ..write('amount: $amount, ')
@@ -448,6 +473,13 @@ class $TransactionLogsTable extends TransactionLogs
       typeName: 'INTEGER',
       requiredDuringInsert: false,
       defaultConstraints: 'PRIMARY KEY AUTOINCREMENT');
+  final VerificationMeta _usernameMeta = const VerificationMeta('username');
+  late final GeneratedColumn<String?> username = GeneratedColumn<String?>(
+      'username', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 6, maxTextLength: 32),
+      typeName: 'TEXT',
+      requiredDuringInsert: true);
   final VerificationMeta _fromMeta = const VerificationMeta('from');
   late final GeneratedColumn<String?> from = GeneratedColumn<String?>(
       'from', aliasedName, false,
@@ -471,7 +503,7 @@ class $TransactionLogsTable extends TransactionLogs
       typeName: 'INTEGER', requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, from, to, amount, description, createAt];
+      [id, username, from, to, amount, description, createAt];
   @override
   String get aliasedName => _alias ?? 'transaction_logs';
   @override
@@ -483,6 +515,12 @@ class $TransactionLogsTable extends TransactionLogs
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('username')) {
+      context.handle(_usernameMeta,
+          username.isAcceptableOrUnknown(data['username']!, _usernameMeta));
+    } else if (isInserting) {
+      context.missing(_usernameMeta);
     }
     if (data.containsKey('from')) {
       context.handle(

@@ -59,8 +59,13 @@ logW<T>(message) {
 }
 
 String rupiahFormat(double d) {
-  final currencyFormatter = NumberFormat.currency(locale: 'ID');
-  return currencyFormatter.format(d).replaceAll('IDR', '');
+  try {
+    final currencyFormatter = NumberFormat.currency(locale: 'ID');
+    return currencyFormatter.format(d).replaceAll('IDR', 'Rp. ').replaceAll(',00', '');
+  } catch (e) {
+    return 'Rp. 0';
+
+  }
 }
 
 // —————————————————————————————————————————————————————————————————————————

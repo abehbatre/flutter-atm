@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ex_reusable/extensions/index.dart';
 import 'package:velocity_x/velocity_x.dart';
 

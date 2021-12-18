@@ -30,10 +30,10 @@ class HomeController extends BaseController with StateMixin<int> {
         });
         break;
       case MENU_TRANSFER:
-        Get.toNamed(Routes.TRANSFER);
+        Get.toNamed(Routes.TRANSFER, arguments: dataUser.value.username);
         break;
       case MENU_MUTATION:
-        Get.toNamed(Routes.MUTATION);
+        Get.toNamed(Routes.MUTATION, arguments: dataUser.value.username);
         break;
       default:
         snackBar(title: "$id", message: "menu $name belum di mapping");
@@ -92,6 +92,13 @@ class HomeController extends BaseController with StateMixin<int> {
           label: 'Masukkan Jumlah ${title}',
           hint: 'Rp.1.000.0000',
           keyboardType: TextInputType.number,
+          onChanged: (value) => update(),
+        ),
+        8.heightBox,
+        GetBuilder<HomeController>(
+          builder: (controller) {
+            return tfInput.text.isNotBlank ? '${rupiahFormat(double.parse(tfInput.text))}'.text.make() : 0.heightBox;
+          },
         ),
         16.heightBox,
         ExButtonOutline(
