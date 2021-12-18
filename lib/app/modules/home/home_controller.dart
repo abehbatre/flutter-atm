@@ -21,16 +21,12 @@ class HomeController extends BaseController with StateMixin<int> {
     switch (id) {
       case MENU_DEPOSIT:
         _showBottomDialog('DEPOSIT', (amount) async {
-          await db.deposit(dataUser.value, double.parse(amount)).then((value) => onInit()).then((value){
-            snackBarSuccess(message: 'Sukses deposit sebesar Rp. $amount');
-          });
+          await db.deposit(dataUser.value, double.parse(amount));
         });
         break;
       case MENU_WITHDRAW:
         _showBottomDialog('WITHDRAW', (amount) async {
-          await db.withdraw(dataUser.value, double.parse(amount)).then((value) => onInit()).then((value){
-            snackBarSuccess(message: 'Sukses withdraw sebesar Rp. $amount');
-          });
+          await db.withdraw(dataUser.value, double.parse(amount));
         });
         break;
       case MENU_TRANSFER:
@@ -89,7 +85,7 @@ class HomeController extends BaseController with StateMixin<int> {
   _showBottomDialog(title, Function(String) onSubmit) {
     var tfInput = TextEditingController();
     bottomSheetContentDialog(
-      title: 'DEPOSIT',
+      title: title,
       childrenWidget: VStack([
         ExTextFieldLabeled(
           tfController: tfInput,

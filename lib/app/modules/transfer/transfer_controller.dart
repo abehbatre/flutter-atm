@@ -43,7 +43,6 @@ class TransferController extends BaseController {
         currentSelectedUserString.value = '-- Pilih Pengguna --';
         currentSelectedUserObject.value = User(username: '', balance: 0, createAt: DateTime.now());
         tfInput.text = '';
-        alertDialogSuccess(message: 'Berhasil transfer ke ${currentSelectedUserObject.value.username}');
       }).onError((e, stackTrace) {
         snackBarError(message: '$e');
       });

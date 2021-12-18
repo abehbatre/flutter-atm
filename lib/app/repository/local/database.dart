@@ -4,6 +4,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter_atm/app/common/exception/exception.dart';
+import 'package:flutter_atm/app/common/resource/_index.dart';
 import 'package:get/get.dart' hide Value;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -118,6 +119,7 @@ class MyDatabase extends _$MyDatabase {
           createAt: DateTime.now(),
         );
         await createOrUpdateTransactionLog(log);
+        Get.snackbar('Sukses', 'berhasil deposit sebesar Rp. ${rupiahFormat(amount)}', backgroundColor: greenOnlineColor, colorText: colorWhite,);
       } catch (e) {
         if (e is LocalException) {
           Get.snackbar('ERROR', '${e.message}');
@@ -143,7 +145,6 @@ class MyDatabase extends _$MyDatabase {
         // validasi
         if (user.balance - amount < 0) {
           throw LocalException('Saldo anda tidak cukup');
-          return;
         }
 
         // update current user balance
@@ -166,6 +167,7 @@ class MyDatabase extends _$MyDatabase {
           createAt: DateTime.now(),
         );
         await createOrUpdateTransactionLog(log);
+        Get.snackbar('Sukses', 'berhasil withdraw sebesar Rp. ${rupiahFormat(amount)}', backgroundColor: greenOnlineColor, colorText: colorWhite);
       } catch (e) {
         if (e is LocalException) {
           Get.snackbar('ERROR', '${e.message}');
@@ -218,6 +220,7 @@ class MyDatabase extends _$MyDatabase {
           createAt: DateTime.now(),
         );
         await createOrUpdateTransactionLog(log);
+        Get.snackbar('Sukses', 'berhasil transfer ke ${userTarget.username} sebesar Rp. ${rupiahFormat(amount)}', backgroundColor: greenOnlineColor, colorText: colorWhite);
       } catch (e) {
         if (e is LocalException) {
           Get.snackbar('ERROR', '${e.message}');

@@ -1,6 +1,8 @@
 import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_atm/app/modules/home/home_controller.dart';
+import 'package:flutter_atm/app/modules/profile/profile_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
@@ -29,6 +31,8 @@ Future<void> _injectDependency() async {
   // Services are injected only when needed .
   // Get.lazyPut<HttpService>(() => HttpService());
   Get.put<MyDatabase>(MyDatabase(), permanent: true);
+  Get.put<HomeController>(HomeController(), permanent: true);
+  Get.put<ProfileController>(ProfileController(), permanent: true);
 }
 
 
