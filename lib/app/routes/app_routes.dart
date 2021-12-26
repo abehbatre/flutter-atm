@@ -12,6 +12,7 @@ abstract class Routes {
   static const DASHBOARD = _Paths.DASHBOARD;
   static const TRANSFER = _Paths.TRANSFER;
   static const MUTATION = _Paths.MUTATION;
+  static const EXAMPLE = _Paths.EXAMPLE;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const DASHBOARD = '/dashboard';
   static const TRANSFER = '/transfer';
   static const MUTATION = '/mutation';
+  static const EXAMPLE = '/example';
 }

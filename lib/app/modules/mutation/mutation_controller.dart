@@ -1,8 +1,9 @@
 import 'package:ex_reusable/ex_reusable.dart';
-import 'package:flutter_atm/app/common/lifecycle/_index.dart';
-import 'package:flutter_atm/app/repository/local/database.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../../common/lifecycle/_index.dart';
+import '../../repository/local/database.dart';
 
 class MutationController extends BaseController with StateMixin<int> {
   final listMutation = <TransactionLog>[].obs;
@@ -13,7 +14,7 @@ class MutationController extends BaseController with StateMixin<int> {
     super.onInit();
   }
 
-  deleteAllLog() {
+  void deleteAllLog() {
     alertDialogConfirmation(
       title: 'Konfirmasi',
       message: 'apakah anda yakin ingin menghapus seluruh mutasi?',
@@ -27,7 +28,7 @@ class MutationController extends BaseController with StateMixin<int> {
     );
   }
 
-  showDetail(TransactionLog data) {
+  void showDetail(TransactionLog data) {
     if (data.description.contains('transfer')) {
       bottomSheetContentDialog(
         title: 'Detail Transaksi',
@@ -59,10 +60,10 @@ class MutationController extends BaseController with StateMixin<int> {
   // —————————————————————————————————————————————————————————————————————————
   // Private Func
   // —————————————————————————————————————————————————————————————————————————
-  _getListTransactionLog() async {
-    var currentUser = Get.arguments;
+  Future<void> _getListTransactionLog() async {
+    final String currentUser = Get.arguments as String;
     await db.getListTransactionLogByUsername(currentUser).then((value) {
-      if (value.length == 0) {
+      if (value.isEmpty) {
         change(0, status: RxStatus.empty());
       } else {
         listMutation.assignAll(value);

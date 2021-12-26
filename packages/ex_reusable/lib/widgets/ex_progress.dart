@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-
 ///   created               : Aditya Pratama
 ///   originalFilename      : ex_progress
 ///   date                  : 24 Jun 2021
@@ -25,11 +24,11 @@ class ExProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int rest = 100 - value;
+    final int rest = 100 - value;
     return Directionality(
       textDirection: TextDirection.ltr,
       child: MediaQuery(
-        data: MediaQueryData(),
+        data: const MediaQueryData(),
         child: Stack(
           children: <Widget>[
             Row(
@@ -46,16 +45,16 @@ class ExProgress extends StatelessWidget {
             Row(
               children: <Widget>[
                 Expanded(
+                  flex: value,
                   child: Container(
                     width: 200,
                     height: height ?? 12,
                     color: color1,
                   ).cornerRadius(20),
-                  flex: value,
                 ),
                 Expanded(
-                  child: Container(),
                   flex: rest,
+                  child: Container(),
                 ),
               ],
             )

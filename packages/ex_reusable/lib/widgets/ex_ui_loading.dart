@@ -28,10 +28,10 @@ class ExUiLoading extends StatelessWidget {
       width: context.mq.size.width,
       child: Center(
         child: VStack(
-          [
-            Center(child: CupertinoActivityIndicator()),
+          <Widget>[
+            const Center(child: CupertinoActivityIndicator()),
             30.heightBox,
-            "${message ?? "Sedang mengambil data..."}".text.size(11).black.makeCentered(),
+            (message ?? 'Sedang mengambil data...').text.size(11).black.makeCentered(),
           ],
         ),
       ),

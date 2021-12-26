@@ -1,4 +1,3 @@
-import 'package:drift/native.dart';
 import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +8,7 @@ import 'app/repository/local/database.dart';
 import 'app/routes/app_pages.dart';
 
 Future main() async {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   WidgetsFlutterBinding.ensureInitialized();
 
   // Shared Pref
@@ -23,18 +22,20 @@ Future main() async {
 
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
-  ).then((value) => runApp(MyApp()));
+  ).then((value) => runApp(const MyApp()));
   logI('App is ready ...');
 }
 
 Future<void> _injectDependency() async {
   // Services are injected only when needed .
   // Get.lazyPut<HttpService>(() => HttpService());
-  Get.put<MyDatabase>(MyDatabase(NativeDatabase.memory()), permanent: true);
+  Get.put<MyDatabase>(MyDatabase(), permanent: true);
 }
 
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

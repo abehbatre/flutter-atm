@@ -30,14 +30,14 @@ class ExImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var header = {"Referer": "https://mobile.gredu.co/*"};
+    // ignore: always_specify_types
+    final Map<String, String> header = {'Referer': 'https://mobile.gredu.co/*'};
     return ZStack(
-      [
+      <Widget>[
         Container(
           width: width ?? 70,
           height: height ?? 70,
           decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
             border: Border.all(color: borderColor ?? Colors.blueGrey, width: borderWidth ?? 0.5),
           ),
           child: ExtendedImage.network(
@@ -46,16 +46,14 @@ class ExImageView extends StatelessWidget {
             width: height ?? 70,
             height: width ?? 70,
             fit: BoxFit.cover,
-            cache: true,
-            borderRadius: BorderRadius.all(Radius.circular(30.0)),
-            enableMemoryCache: true,
+            borderRadius: const BorderRadius.all(Radius.circular(30.0)),
             isAntiAlias: true,
             cacheMaxAge: 7.days,
             retries: 1,
-            loadStateChanged: (state) {
+            loadStateChanged: (ExtendedImageState state) {
               switch (state.extendedImageLoadState) {
                 case LoadState.loading:
-                  return CupertinoActivityIndicator();
+                  return const CupertinoActivityIndicator();
                 case LoadState.completed:
                   return ExtendedRawImage(
                     image: state.extendedImageInfo?.image,
@@ -67,17 +65,17 @@ class ExImageView extends StatelessWidget {
                   return GestureDetector(
                     child: Stack(
                       fit: StackFit.expand,
-                      children: [
+                      children: <Widget>[
                         Image.network(
-                          "https://image.freepik.com/free-vector/glitch-error-404-page_23-2148105404.jpg",
+                          'https://image.freepik.com/free-vector/glitch-error-404-page_23-2148105404.jpg',
                           fit: BoxFit.cover,
                         ),
-                        Positioned(
+                        const Positioned(
                           bottom: 0.0,
                           left: 0.0,
                           right: 0.0,
                           child: Text(
-                            "load image failed, click to reload",
+                            'load image failed, click to reload',
                             textAlign: TextAlign.center,
                           ),
                         )

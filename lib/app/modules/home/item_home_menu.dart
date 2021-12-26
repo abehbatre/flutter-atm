@@ -2,18 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:flutter_atm/app/common/resource/_index.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../common/resource/_index.dart';
 import 'home_controller.dart';
 
 class ItemHomeMenu extends StatelessWidget {
-  final int? id;
-  final String? icon;
-  final String label;
-  final bool badge;
-  final Function onPress;
-
   const ItemHomeMenu({
     Key? key,
     this.id,
@@ -23,11 +17,17 @@ class ItemHomeMenu extends StatelessWidget {
     required this.onPress,
   }) : super(key: key);
 
+  final int? id;
+  final String? icon;
+  final String label;
+  final bool badge;
+  final Function() onPress;
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<HomeController>();
     return Container(
-      decoration: controller.commonBoxDecoration(radius: 8, borderColor: scaffoldBackgroundColor, fillColor: scaffoldBackgroundColor),
+      decoration: controller.commonBoxDecoration(borderColor: scaffoldBackgroundColor, fillColor: scaffoldBackgroundColor),
       child: VStack([
         Image.asset('$icon', width: 82, height: 82),
         12.heightBox,
@@ -39,7 +39,7 @@ class ItemHomeMenu extends StatelessWidget {
               height: 10,
             ),
             12.widthBox,
-            "$label".text.semiBold.make().expand(),
+            label.text.semiBold.make().expand(),
           ]),
         ),
       ]).p12().onInkTap(() => onPress.call()),

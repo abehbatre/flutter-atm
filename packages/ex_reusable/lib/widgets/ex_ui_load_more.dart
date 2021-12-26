@@ -19,21 +19,17 @@ class ExLoadMore extends StatelessWidget {
       builder: (BuildContext context, LoadStatus? mode) {
         Widget body;
         if (mode == LoadStatus.idle) {
-          body = Container(
-            child: Text("-- Tidak ada lagi data --"),
-          ).pOnly(top: 24);
+          body = const Text('-- Tidak ada lagi data --').pOnly(top: 24);
         } else if (mode == LoadStatus.loading) {
-          body = CupertinoActivityIndicator();
+          body = const CupertinoActivityIndicator();
         } else if (mode == LoadStatus.failed) {
-          body = Text("Load Failed! Click retry!");
+          body = const Text('Load Failed! Click retry!');
         } else if (mode == LoadStatus.canLoading) {
-          body = Text("release to load more");
+          body = const Text('release to load more');
         } else {
-          body = Container(
-            child: Text("Tidak ada lagi data."),
-          );
+          body = const Text('Tidak ada lagi data.');
         }
-        return Container(
+        return SizedBox(
           height: 55.0,
           child: Center(child: body),
         );

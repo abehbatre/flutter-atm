@@ -48,10 +48,17 @@ class ExTextFieldLabeled extends StatelessWidget {
           color: borderColor ?? const Color(0xFFe4e8eb),
         ),
         borderRadius: BorderRadius.circular(borderRadius ?? 11),
-        boxShadow: <BoxShadow>[BoxShadow(color: Colors.white54, blurRadius: 5, spreadRadius: 10, offset: Offset(0.00, 0.55))],
+        boxShadow: const <BoxShadow>[
+          BoxShadow(
+            color: Colors.white54,
+            blurRadius: 5,
+            spreadRadius: 10,
+            offset: Offset(0.00, 0.55),
+          ),
+        ],
       ),
-      child: VStack([
-        "$label".text.size(labelSize ?? 13).color(Color(0xff9fa5aa)).make(),
+      child: VStack(<Widget>[
+        label.text.size(labelSize ?? 13).color(const Color(0xff9fa5aa)).make(),
         VxTextField(
           borderType: VxTextFieldBorderType.none,
           fillColor: Colors.white,
@@ -62,7 +69,7 @@ class ExTextFieldLabeled extends StatelessWidget {
           textInputAction: textInputAction,
           keyboardType: keyboardType,
           controller: tfController,
-          onChanged:(value) =>  onChanged!(value),
+          onChanged: (String value) => onChanged!(value),
           onSubmitted: onSubmitted,
         ),
       ]).pOnly(top: 16, left: 16, bottom: 8, right: 16),

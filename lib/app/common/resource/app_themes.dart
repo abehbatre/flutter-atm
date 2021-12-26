@@ -22,11 +22,11 @@ class AppThemes {
   final String _sThemeModeKey = 'S_THEME_MODE_KEY';
   final String _sThemeModeLight = '_sThemeModeLight';
   final String _sThemeModeDark = '_sThemeModeDark';
-  static String _fontFamily = "NunitoSans";
+  static const String _fontFamily = 'NunitoSans';
 
   // LIGHT THEME TEXT
   // ignore: unused_field
-  static final TextTheme _lightTextTheme = TextTheme(
+  static const TextTheme _lightTextTheme = TextTheme(
     overline: TextStyle(color: colorWhite, fontFamily: _fontFamily),
     headline1: TextStyle(fontSize: 20.0, fontFamily: _fontFamily),
     bodyText1: TextStyle(fontSize: 16.0, fontFamily: _fontFamily),
@@ -38,7 +38,7 @@ class AppThemes {
   );
 
   // DARK THEME TEXT
-  static final TextTheme _darkTextTheme = TextTheme(
+  static const TextTheme _darkTextTheme = TextTheme(
     overline: TextStyle(color: colorBlack, fontFamily: _fontFamily),
     headline1: TextStyle(fontSize: 20.0, fontFamily: _fontFamily),
     bodyText1: TextStyle(fontSize: 16.0, fontFamily: _fontFamily),
@@ -60,23 +60,23 @@ class AppThemes {
     errorColor: Colors.red[500],
     scaffoldBackgroundColor: colorWhite,
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: colorPrimary,
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       iconTheme: IconThemeData(color: colorBlack),
       color: colorWhite,
       elevation: 0,
     ),
-    colorScheme: ColorScheme.light(
+    colorScheme: const ColorScheme.light(
       primary: colorPrimary,
       primaryVariant: colorPrimaryDark,
     ),
-    snackBarTheme: SnackBarThemeData(backgroundColor: colorPrimaryLight),
-    iconTheme: IconThemeData(
+    snackBarTheme: const SnackBarThemeData(backgroundColor: colorPrimaryLight),
+    iconTheme: const IconThemeData(
       color: colorPrimary,
     ),
-    popupMenuTheme: PopupMenuThemeData(color: paleGrey),
+    popupMenuTheme: const PopupMenuThemeData(color: paleGrey),
     textTheme: GoogleFonts.aBeeZeeTextTheme(Get.textTheme),
   );
 
@@ -88,23 +88,23 @@ class AppThemes {
     fontFamily: _fontFamily,
     primaryColor: primaryDarkColor,
     scaffoldBackgroundColor: darkBackgroundColor,
-    floatingActionButtonTheme: FloatingActionButtonThemeData(
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
       backgroundColor: primaryDarkColor,
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle.dark,
       color: primaryDarkColor,
       iconTheme: IconThemeData(color: iconColorDark),
     ),
-    colorScheme: ColorScheme.dark(
+    colorScheme: const ColorScheme.dark(
       primary: primaryDarkColor,
       primaryVariant: colorPrimaryDark,
     ),
-    snackBarTheme: SnackBarThemeData(backgroundColor: darkBackgroundColor),
-    iconTheme: IconThemeData(
+    snackBarTheme: const SnackBarThemeData(backgroundColor: darkBackgroundColor),
+    iconTheme: const IconThemeData(
       color: iconColorDark,
     ),
-    popupMenuTheme: PopupMenuThemeData(color: darkBackgroundColor),
+    popupMenuTheme: const PopupMenuThemeData(color: darkBackgroundColor),
     textTheme: _darkTextTheme,
   );
 
@@ -119,7 +119,7 @@ class AppThemes {
   }
 
   ThemeMode init() {
-    String? tm = pref.read(_sThemeModeKey) ?? null;
+    final String? tm = pref.read(_sThemeModeKey);
     if (tm == null) {
       pref.write(_sThemeModeKey, _sThemeModeLight);
       return ThemeMode.light;
@@ -154,7 +154,7 @@ class AppThemes {
   /// [Function] AppThemes().general().*
   /// has several derivative functions.
   ThemeData general() {
-    String? tm = pref.read(_sThemeModeKey) ?? null;
+    final String? tm = pref.read(_sThemeModeKey);
     if (tm == _sThemeModeLight) {
       return _lightTheme;
     }

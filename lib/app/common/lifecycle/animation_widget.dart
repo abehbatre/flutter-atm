@@ -1,12 +1,8 @@
+// ignore_for_file: always_specify_types
+
 import 'package:flutter/material.dart';
 
 class TranslateAnimation extends StatelessWidget {
-  final Widget? child;
-  final Duration? duration;
-  final double? offset;
-  final Curve? curve;
-  final Axis? offsetDirection;
-
   const TranslateAnimation({
     Key? key,
     this.duration = const Duration(milliseconds: 800),
@@ -16,27 +12,27 @@ class TranslateAnimation extends StatelessWidget {
     this.offsetDirection = Axis.vertical,
   }) : super(key: key);
 
+  final Widget? child;
+  final Duration? duration;
+  final double? offset;
+  final Curve? curve;
+  final Axis? offsetDirection;
+
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
       duration: duration!,
-      child: child,
       curve: curve!,
       tween: Tween(begin: 1.0, end: 0.0),
-      builder: (context, double? value, child) {
+      builder: (BuildContext context, double? value, Widget? child) {
         return Transform.translate(offset: offsetDirection == Axis.horizontal ? Offset(value! * offset!, 0) : Offset(0, value! * offset!), child: child);
       },
+      child: child,
     );
   }
 }
 
 class OpacityAnimation extends StatelessWidget {
-  final Widget? child;
-  final Duration? duration;
-  final Curve? curve;
-  final double? begin;
-  final double? end;
-
   const OpacityAnimation({
     Key? key,
     this.duration = const Duration(milliseconds: 1000),
@@ -46,30 +42,30 @@ class OpacityAnimation extends StatelessWidget {
     this.end = 1.0,
   }) : super(key: key);
 
+  final Widget? child;
+  final Duration? duration;
+  final Curve? curve;
+  final double? begin;
+  final double? end;
+
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
       duration: duration!,
-      child: child,
       curve: curve!,
       tween: Tween(begin: begin, end: end),
-      builder: (context, double? value, child) {
+      builder: (BuildContext context, double? value, Widget? child) {
         return Opacity(
           opacity: value!,
           child: child,
         );
       },
+      child: child,
     );
   }
 }
 
 class ScaleAnimation extends StatelessWidget {
-  final Widget child;
-  final Duration duration;
-  final double initScale;
-  final double finalScale;
-  final Curve curve;
-
   const ScaleAnimation({
     Key? key,
     this.duration = const Duration(milliseconds: 800),
@@ -78,31 +74,39 @@ class ScaleAnimation extends StatelessWidget {
     this.initScale = 0.0,
     this.finalScale = 1.0,
   }) : super(key: key);
+  final Widget child;
+  final Duration duration;
+  final double initScale;
+  final double finalScale;
+  final Curve curve;
 
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder(
       duration: duration,
-      child: child,
       curve: curve,
       tween: Tween(begin: initScale, end: finalScale),
-      builder: (context, double? value, child) {
+      builder: (BuildContext context, double? value, Widget? child) {
         return Transform.scale(
           scale: value!,
           child: child,
         );
       },
+      child: child,
     );
   }
 }
 
 class TextAnimation extends StatelessWidget {
-  final Widget child;
+  const TextAnimation({
+    required this.child,
+    Key? key,
+  }): super(key: key);
 
-  const TextAnimation({required this.child});
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return OpacityAnimation(duration: Duration(milliseconds: 3000), child: child);
+    return OpacityAnimation(duration: const Duration(milliseconds: 3000), child: child);
   }
 }

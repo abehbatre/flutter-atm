@@ -1,9 +1,8 @@
-import 'package:dartx/dartx.dart';
+// import 'package:dartx/dartx.dart';
+import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ex_reusable/ex_reusable.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 ///   created               : Aditya Pratama
 ///   originalFilename      : picker_widgets
@@ -14,36 +13,25 @@ class PickerWidgets {
   // —————————————————————————————————————————————————————————————————————————
   // DATE PICKER (CUPERTINO) —————————————————————————————————————————————————
   // —————————————————————————————————————————————————————————————————————————
-  datePickerCupertino({
+  void datePickerCupertino({
     DateTime? initialDate,
     DateTime? minDate,
     DateTime? maxDate,
-    required Function1 picked,
+    required Function(DateTime) picked,
   }) {
     var output = DateTime.now();
     showCupertinoModalPopup(
       context: Get.context!,
       builder: (_) => Container(
         height: 320,
-        color: Color.fromARGB(255, 255, 255, 255),
+        color: const Color.fromARGB(255, 255, 255, 255),
         child: Column(
           children: [
-            // Container(
-            //   padding: EdgeInsets.all(12),
-            //   child: Row(children: [
-            //     Icon(Icons.close_rounded, size: 30, color: Color(0xff888888)),
-            //     SizedBox(width: 6),
-            //     'Tanggal'.text.size(16).color(Color(0xFF333333)).make(),
-            //   ],
-            //   ),
-            // ),
-            Container(
+            SizedBox(
               height: 200,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.date,
                 initialDateTime: initialDate ?? DateTime.now(),
-                minimumDate: minDate ?? DateTime.now() - 1.seconds,
-                // somehow must like this =,=
                 maximumDate: maxDate ?? DateTime(2050),
                 onDateTimeChanged: (val) => output = val,
               ),
@@ -53,7 +41,7 @@ class PickerWidgets {
                 height: 52,
                 width: 300,
                 radius: 30,
-                btnText: "Pilih",
+                btnText: 'Pilih',
                 onPress: () {
                   picked.call(output);
                   Navigator.of(Get.context!).pop();
@@ -64,27 +52,25 @@ class PickerWidgets {
     );
   }
 
-  timePickerCupertino({
+  void timePickerCupertino({
     DateTime? initialDate,
     DateTime? minDate,
     DateTime? maxDate,
-    required Function1 callback,
+    required Function(DateTime) callback,
   }) {
     var output = DateTime.now();
     showCupertinoModalPopup(
       context: Get.context!,
       builder: (_) => Container(
         height: 270,
-        color: Color.fromARGB(255, 255, 255, 255),
+        color: const Color.fromARGB(255, 255, 255, 255),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: 200,
               child: CupertinoDatePicker(
                 mode: CupertinoDatePickerMode.time,
                 initialDateTime: initialDate ?? DateTime.now(),
-                minimumDate: minDate ?? DateTime.now() - 1.seconds,
-                // somehow must like this =,=
                 maximumDate: maxDate ?? DateTime(2050),
                 onDateTimeChanged: (val) => output = val,
 
@@ -93,7 +79,7 @@ class PickerWidgets {
             ),
             // Close the modal
             CupertinoButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 callback.call(output);
                 Navigator.of(Get.context!).pop();
@@ -108,11 +94,11 @@ class PickerWidgets {
 // —————————————————————————————————————————————————————————————————————————
 // DATE PICKER (MATERIAL) ——————————————————————————————————————————————————
 // —————————————————————————————————————————————————————————————————————————
-  datePickerMaterial({
+  Future<void> datePickerMaterial({
     DateTime? initialDate,
     DateTime? minDate,
     DateTime? maxDate,
-    required Function1 callback,
+    required Function(DateTime) callback,
   }) async {
     final DateTime? picked = await showDatePicker(
       context: Get.context!,
@@ -125,11 +111,11 @@ class PickerWidgets {
     }
   }
 
-  timePickerMaterial({
+  Future<void> timePickerMaterial({
     DateTime? initialDate,
     DateTime? minDate,
     DateTime? maxDate,
-    required Function1 callback,
+    required Function(TimeOfDay) callback,
   }) async {
     final TimeOfDay? picked = await showTimePicker(
       context: Get.context!,

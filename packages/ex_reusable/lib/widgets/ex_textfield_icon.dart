@@ -46,14 +46,15 @@ class ExTextFieldIcon extends StatelessWidget {
       borderType: VxTextFieldBorderType.roundLine,
       borderRadius: 8,
       borderColor: borderColor,
-      maxLine: 1,
-      prefixIcon: HStack([
-        16.widthBox,
-        Icon(icon, size: 20, color: iconColor),
-        12.widthBox,
-        Container(color: borderColor, height: 40, width: 1),
-        16.widthBox,
-      ]),
+      prefixIcon: HStack(
+        <Widget>[
+          16.widthBox,
+          Icon(icon, size: 20, color: iconColor),
+          12.widthBox,
+          Container(color: borderColor, height: 40, width: 1),
+          16.widthBox,
+        ],
+      ),
       keyboardType: textInputType,
       textInputAction: textInputAction,
       onChanged: onChanged,

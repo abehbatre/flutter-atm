@@ -1,4 +1,3 @@
-import 'package:drift/native.dart';
 import 'package:flutter_atm/app/repository/local/database.dart';
 import 'package:test/test.dart';
 
@@ -6,7 +5,7 @@ void main() {
   late MyDatabase database;
 
   setUp(() {
-    database = MyDatabase(NativeDatabase.memory());
+    database = MyDatabase();
   });
 
   tearDown(() async {
@@ -23,9 +22,9 @@ void main() {
 
 
   test('users can be created & make sure valid is Exists', () async {
-    var userNameInput = 'aditP001';
+    const userNameInput = 'aditP001';
     // step 1 : input data
-    var entry = UsersCompanion.insert(
+    final entry = UsersCompanion.insert(
       username: userNameInput, // pk
       balance: 0,
       createAt: DateTime.now(),
@@ -34,10 +33,10 @@ void main() {
 
     // step 2 : search data
     var currentUsername = '';
-    await database.getUserByUsername(userNameInput).listen((event) {
+    database.getUserByUsername(userNameInput).listen((event) {
       currentUsername = event.username;
     });
     // step 3 : expect (create <> search)
-    expect(entry.username, '${currentUsername}');
+    expect(entry.username, currentUsername);
   });
 }

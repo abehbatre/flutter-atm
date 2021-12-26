@@ -1,28 +1,30 @@
+// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, only_throw_errors
+
 import 'dart:io';
 import 'dart:ui';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:ex_reusable/ex_reusable.dart';
-import 'package:flutter_atm/app/common/exception/exception.dart';
-import 'package:flutter_atm/app/common/resource/_index.dart';
 import 'package:get/get.dart' hide Value;
 import 'package:mock_data/mock_data.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:random_string/random_string.dart';
 
+import '../../common/exception/exception.dart';
+import '../../common/resource/_index.dart';
+
 part 'database.g.dart';
 
-/**
- * Documentation : https://drift.simonbinder.eu/docs/getting-started/
- * —————————————————————————————————————————————————————————————————————————————
- * CODE GENERATOR
- * —————————————————————————————————————————————————————————————————————————————
- * > flutter packages pub run build_runner build
- * > dart run drift_dev analyze
- * —————————————————————————————————————————————————————————————————————————————
- * */
+/// Documentation : https://drift.simonbinder.eu/docs/getting-started/
+/// —————————————————————————————————————————————————————————————————————————————
+/// CODE GENERATOR
+/// —————————————————————————————————————————————————————————————————————————————
+/// > flutter packages pub run build_runner build
+/// > dart run drift_dev analyze
+/// —————————————————————————————————————————————————————————————————————————————
+/// */
 
 // —————————————————————————————————————————————————————————————————————————
 // MODEL TABLE CLASS
@@ -61,7 +63,7 @@ LazyDatabase _openConnection() {
 @DriftDatabase(tables: [Users, TransactionLogs])
 class MyDatabase extends _$MyDatabase {
   // MyDatabase() : super(_openConnection());
-  MyDatabase(NativeDatabase nativeDatabase) : super(_openConnection());
+  MyDatabase() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
@@ -102,13 +104,12 @@ class MyDatabase extends _$MyDatabase {
   // action
   // —————————————————————————————————————————————————————————————————————————
 
-  /**
-   * deposit
-   *
-   * @param {User} user
-   * @param {number} amount
-   * @returns {Future}
-   **/
+  /// deposit
+  ///
+  /// @param {User} user
+  /// @param {number} amount
+  /// @returns {Future}
+  ///*/
 
   Future deposit(User user, double amount) async {
     return transaction(() async {
@@ -119,7 +120,7 @@ class MyDatabase extends _$MyDatabase {
         ));
 
         // insert to transactionLog
-        var log = TransactionLog(
+        final log = TransactionLog(
           id: randomBetween(100, 123456789),
           username: user.username,
           from: user.username,
@@ -132,36 +133,35 @@ class MyDatabase extends _$MyDatabase {
         Get.snackbar(
           'Sukses',
           'berhasil deposit sebesar ${rupiahFormat(amount)}',
-          backgroundColor: Color(0x8A2E7D32),
+          backgroundColor: const Color(0x8A2E7D32),
           barBlur: 8.0,
           colorText: colorWhite,
         );
-        logW("deposit : [$user, $amount]");
+        logW('deposit : [$user, $amount]');
       } catch (e) {
         if (e is LocalException) {
-          Get.snackbar('ERROR', '${e.message}');
+          Get.snackbar('ERROR', e.message);
         } else {
           Get.snackbar('ERROR', '$e');
-          logE("deposit : $e");
+          logE('deposit : $e');
         }
       }
     });
   }
 
-  /**
-   * withdraw
-   *
-   * @param {User} user
-   * @param {number} amount
-   * @returns {Future}
-   **/
+  /// withdraw
+  ///
+  /// @param {User} user
+  /// @param {number} amount
+  /// @returns {Future}
+  ///*/
 
   Future withdraw(User user, double amount) async {
     return transaction(() async {
       try {
         // validasi
         if (user.balance - amount < 0) {
-          throw LocalException('Saldo anda tidak cukup');
+          throw const LocalException(message: 'Saldo anda tidak cukup');
         }
 
         // update current user balance
@@ -169,13 +169,13 @@ class MyDatabase extends _$MyDatabase {
           'UPDATE users SET balance = ? WHERE username = ?',
           updates: {users},
           variables: [
-            Variable.withReal((user.balance - amount)),
+            Variable.withReal(user.balance - amount),
             Variable.withString(user.username),
           ],
         );
 
         // insert to transactionLog
-        var log = TransactionLog(
+        final log = TransactionLog(
           id: randomBetween(100, 123456789),
           username: user.username,
           from: user.username,
@@ -188,54 +188,53 @@ class MyDatabase extends _$MyDatabase {
         Get.snackbar(
           'Sukses',
           'berhasil withdraw sebesar ${rupiahFormat(amount)}',
-          backgroundColor: Color(0x8A2E7D32),
+          backgroundColor: const Color(0x8A2E7D32),
           barBlur: 8.0,
           colorText: colorWhite,
         );
       } catch (e) {
         if (e is LocalException) {
-          Get.snackbar('ERROR', '${e.message}');
+          Get.snackbar('ERROR', e.message);
         } else {
           Get.snackbar('ERROR', '$e');
-          logE("withdraw : $e");
+          logE('withdraw : $e');
         }
       }
     });
   }
 
-  /**
-   * transfer
-   *
-   * @param {User} userOwner
-   * @param {User} userTarget
-   * @param {number} amount
-   * @returns {Future}
-   **/
+  /// transfer
+  ///
+  /// @param {User} userOwner
+  /// @param {User} userTarget
+  /// @param {number} amount
+  /// @returns {Future}
+  ///*/
 
   Future transfer(User userOwner, User userTarget, double amount) async {
     return transaction(() async {
       try {
         // validasi
         if (userOwner.balance - amount < 0) {
-          throw LocalException('Saldo anda tidak cukup');
+          throw LocalException(message: 'Saldo anda tidak cukup');
         }
 
         // update current user balance ----
         await customUpdate(
           'UPDATE users SET balance = ? WHERE username = ?',
           updates: {users},
-          variables: [Variable.withReal((userOwner.balance - amount)), Variable.withString(userOwner.username)],
+          variables: [Variable.withReal(userOwner.balance - amount), Variable.withString(userOwner.username)],
         );
 
         // update target user balance ++++
         await customUpdate(
           'UPDATE users SET balance = ? WHERE username = ?',
           updates: {users},
-          variables: [Variable.withReal((userTarget.balance + amount)), Variable.withString(userTarget.username)],
+          variables: [Variable.withReal(userTarget.balance + amount), Variable.withString(userTarget.username)],
         );
 
         // insert to transactionLog <current user>
-        var log = TransactionLog(
+        final log = TransactionLog(
           id: randomBetween(100, 123456789),
           username: userOwner.username,
           from: userOwner.username,
@@ -247,7 +246,7 @@ class MyDatabase extends _$MyDatabase {
         await createOrUpdateTransactionLog(log);
 
         // insert to transactionLog <target user>
-        var log2 = TransactionLog(
+        final log2 = TransactionLog(
           id: randomBetween(100, 123456789),
           username: userTarget.username,
           from: userOwner.username,
@@ -261,16 +260,16 @@ class MyDatabase extends _$MyDatabase {
         Get.snackbar(
           'Sukses',
           'berhasil transfer ke ${userTarget.username} sebesar ${rupiahFormat(amount)}',
-          backgroundColor: Color(0x8A2E7D32),
+          backgroundColor: const Color(0x8A2E7D32),
           barBlur: 8.0,
           colorText: colorWhite,
         );
       } catch (e) {
         if (e is LocalException) {
-          Get.snackbar('ERROR', '${e.message}');
+          Get.snackbar('ERROR', e.message);
         } else {
           Get.snackbar('ERROR', '$e');
-          logE("transfer : $e");
+          logE('transfer : $e');
         }
       }
     });
@@ -282,11 +281,11 @@ class MyDatabase extends _$MyDatabase {
     // - populate data
 
     try {
-      var totalData = 0;
-      await countUsers.call().listen((event) async {
-        totalData = event.data.values.toList()[0];
+      int? totalData = 0;
+      countUsers.call().listen((event) async {
+        totalData = event.data.values.toList()[0] as int;
         // only run this process when data < 1
-        if (totalData < 1) { // populate data
+        if (totalData! < 1) { // populate data
           await batch((batch) {
             for (int i = 0; i < 4; i++) {
               batch.insertAll(users, [
@@ -302,7 +301,7 @@ class MyDatabase extends _$MyDatabase {
 
 
     } catch (e) {
-      logW("populateUser : $e");
+      logW('populateUser : $e');
     }
   }
 }

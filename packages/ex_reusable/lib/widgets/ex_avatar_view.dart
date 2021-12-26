@@ -3,8 +3,9 @@ import 'dart:math';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ex_reusable/extensions/index.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../extensions/index.dart';
 
 ///   created               : Aditya Pratama
 ///   originalFilename      : ex_avatar_view
@@ -38,7 +39,7 @@ class ExAvatarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var header = {"Referer": "https://mobile.gredu.co/*"};
+    final Map<String, String> header = {'Referer': 'https://mobile.gredu.co/*'};
 
     return ZStack(
       [
@@ -56,16 +57,14 @@ class ExAvatarView extends StatelessWidget {
               width: height ?? 70,
               height: width ?? 70,
               fit: BoxFit.cover,
-              cache: true,
-              borderRadius: BorderRadius.all(Radius.circular(30.0)),
-              enableMemoryCache: true,
+              borderRadius: const BorderRadius.all(Radius.circular(30.0)),
               isAntiAlias: true,
               cacheMaxAge: 7.days,
               retries: 1,
-              loadStateChanged: (state) {
+              loadStateChanged: (ExtendedImageState state) {
                 switch (state.extendedImageLoadState) {
                   case LoadState.loading:
-                    return CupertinoActivityIndicator();
+                    return const CupertinoActivityIndicator();
                   case LoadState.completed:
                     return ExtendedRawImage(
                       image: state.extendedImageInfo?.image,
@@ -77,7 +76,7 @@ class ExAvatarView extends StatelessWidget {
                     return Stack(
                       fit: StackFit.expand,
                       children: [
-                        "${userFullName.initialName}"
+                        userFullName.initialName
                             .text
                             .color(textColor ?? Colors.white)
                             .size(textSize ?? 14)
@@ -96,82 +95,82 @@ class ExAvatarView extends StatelessWidget {
 
   // @todo : FIX ME, this ugly -_-
   Color _buildBgColorByName(String initialName) {
-    var output;
+    Color output;
     switch (initialName.substring(0, 1)) {
-      case "A":
-        output = Color(0xff5876dc);
+      case 'A':
+        output = const Color(0xff5876dc);
         break;
-      case "B":
-        output = Color(0xffa6daf1);
+      case 'B':
+        output = const Color(0xffa6daf1);
         break;
-      case "C":
-        output = Color(0xffb4aa52);
+      case 'C':
+        output = const Color(0xffb4aa52);
         break;
-      case "D":
-        output = Color(0xff936b5e);
+      case 'D':
+        output = const Color(0xff936b5e);
         break;
-      case "E":
-        output = Color(0xff8246a7);
+      case 'E':
+        output = const Color(0xff8246a7);
         break;
-      case "F":
-        output = Color(0xffa78346);
+      case 'F':
+        output = const Color(0xffa78346);
         break;
-      case "G":
-        output = Color(0xffa74646);
+      case 'G':
+        output = const Color(0xffa74646);
         break;
-      case "H":
-        output = Color(0xff46a780);
+      case 'H':
+        output = const Color(0xff46a780);
         break;
-      case "I":
-        output = Color(0xff4656a7);
+      case 'I':
+        output = const Color(0xff4656a7);
         break;
-      case "J":
-        output = Color(0xffa446a7);
+      case 'J':
+        output = const Color(0xffa446a7);
         break;
-      case "K":
-        output = Color(0xffa7468c);
+      case 'K':
+        output = const Color(0xffa7468c);
         break;
-      case "L":
-        output = Color(0xff766873);
+      case 'L':
+        output = const Color(0xff766873);
         break;
-      case "M":
-        output = Color(0xffabbfab);
+      case 'M':
+        output = const Color(0xffabbfab);
         break;
-      case "O":
-        output = Color(0xff8471a3);
+      case 'O':
+        output = const Color(0xff8471a3);
         break;
-      case "P":
-        output = Color(0xffa071a3);
+      case 'P':
+        output = const Color(0xffa071a3);
         break;
-      case "Q":
-        output = Color(0xffa1a371);
+      case 'Q':
+        output = const Color(0xffa1a371);
         break;
-      case "R":
-        output = Color(0xff7176a3);
+      case 'R':
+        output = const Color(0xff7176a3);
         break;
-      case "S":
-        output = Color(0xffa37171);
+      case 'S':
+        output = const Color(0xffa37171);
         break;
-      case "T":
-        output = Color(0xffa37198);
+      case 'T':
+        output = const Color(0xffa37198);
         break;
-      case "U":
-        output = Color(0xff8ea371);
+      case 'U':
+        output = const Color(0xff8ea371);
         break;
-      case "V":
-        output = Color(0xff7193a3);
+      case 'V':
+        output = const Color(0xff7193a3);
         break;
-      case "W":
-        output = Color(0xff7189a3);
+      case 'W':
+        output = const Color(0xff7189a3);
         break;
-      case "X":
-        output = Color(0xffa071a3);
+      case 'X':
+        output = const Color(0xffa071a3);
         break;
-      case "Y":
-        output = Color(0xffa37171);
+      case 'Y':
+        output = const Color(0xffa37171);
         break;
-      case "Z":
-        output = Color(0xff7a71a3);
+      case 'Z':
+        output = const Color(0xff7a71a3);
         break;
       default:
         output = Colors.primaries[Random().nextInt(Colors.primaries.length)];

@@ -54,44 +54,34 @@ class ExUiErrorOrEmpty extends StatelessWidget {
         // width: context.mq.size.width,
         color: bgColor ?? Colors.transparent,
         child: VStack(
-          [
-            svgAssets != null
-                ? SvgPicture.asset(
+          <Widget>[
+            if (svgAssets != null) SvgPicture.asset(
                     '$svgAssets',
                     width: imageWidth,
                     height: imageHeight,
-                  ).centered()
-                : 0.heightBox,
-            lottieAssets != null
-                ? Lottie.asset(
+                  ).centered() else 0.heightBox,
+            if (lottieAssets != null) Lottie.asset(
                     '$lottieAssets',
                     width: imageWidth,
                     height: imageHeight,
                     fit: BoxFit.fill,
-                  ).centered()
-                : 0.heightBox,
-            lottieNetwork != null
-                ? Lottie.network(
+                  ).centered() else 0.heightBox,
+            if (lottieNetwork != null) Lottie.network(
                     '$lottieNetwork',
                     width: imageWidth,
                     height: imageHeight,
                     fit: BoxFit.fill,
-                  ).centered()
-                : 0.heightBox,
+                  ).centered() else 0.heightBox,
             HeightBox(title.isEmptyOrNull ? 0 : 20),
-            "$title".text.size(16).semiBold.color(Colors.black).makeCentered(),
-            HeightBox(20),
-            message.isEmptyOrNull
-                ? "Terjadi Kesalahan".text.size(textSize).color(textColor ?? Colors.black).makeCentered()
-                : "$message".text.size(textSize).color(textColor ?? Colors.black).align(TextAlign.center).makeCentered(),
-            HeightBox(20),
-            showBtnRetry == true
-                ? ExButtonOutline(
-                    btnText: btnText ?? "Reload",
+            title.text.size(16).semiBold.color(Colors.black).makeCentered(),
+            const HeightBox(20),
+            if (message.isEmptyOrNull) 'Terjadi Kesalahan'.text.size(textSize).color(textColor ?? Colors.black).makeCentered() else message.text.size(textSize).color(textColor ?? Colors.black).align(TextAlign.center).makeCentered(),
+            const HeightBox(20),
+            if (showBtnRetry == true) ExButtonOutline(
+                    btnText: btnText ?? 'Reload',
                     color: textColor ?? Colors.black,
                     onPress: callback,
-                  ).centered()
-                : "".text.make(),
+                  ).centered() else ''.text.make(),
           ],
         ).centered(),
       ),

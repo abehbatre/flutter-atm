@@ -9,16 +9,16 @@ environment:
 
 dependencies:
   # sort by asc
-  cupertino_icons: ^1.0.3
-  dartx: ^0.7.1
-  device_info: ^2.0.2
+  cupertino_icons: ^1.0.4
+  dartx: ^1.0.0
+  device_info: ^2.0.3
   extended_image: ^4.1.0
   intl: ^0.17.0
-  logger: ^1.0.0
+  logger: ^1.1.0
   velocity_x: ^3.3.0
-  flutter_svg: ^0.22.0
+  flutter_svg: "^0.22.0"
   pull_to_refresh: ^2.0.0
-  table_calendar: ^3.0.1
+  table_calendar: ^3.0.3
   flutter_image_compress: ^1.1.0
   lottie: ^1.2.1
 

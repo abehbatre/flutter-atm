@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_atm/app/common/lifecycle/_index.dart';
-import 'package:flutter_atm/app/constants/_shared_preference_key.dart';
-import 'package:flutter_atm/app/repository/local/database.dart';
-import 'package:flutter_atm/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+
+import '../../common/lifecycle/_index.dart';
+import '../../constants/_shared_preference_key.dart';
+import '../../repository/local/database.dart';
+import '../../routes/app_pages.dart';
 
 class LoginController extends BaseController {
   final tfUserName = TextEditingController();
@@ -17,14 +18,12 @@ class LoginController extends BaseController {
     super.onInit();
   }
 
-  /**
-   * doLogin
-   * —————————————————————————————————————————————————————————————————————————————
-   * flow :
-   * - validasi textField yg di input user.
-   * - check user di db, kalo belum ada insert, kalo uda ada lanjut ke dashboard...
-   */
-  doLogin() async {
+  /// doLogin
+  /// —————————————————————————————————————————————————————————————————————————————
+  /// flow :
+  /// - validasi textField yg di input user.
+  /// - check user di db, kalo belum ada insert, kalo uda ada lanjut ke dashboard...
+  Future<void> doLogin() async {
     _validation(() async {
       // GET_USER
       db.getUserByUsername(tfUserName.text).listen((event) async {
@@ -33,7 +32,7 @@ class LoginController extends BaseController {
         Get.offAndToNamed(Routes.DASHBOARD);
       }).onError((e) async {
         // INSERT
-        var user = UsersCompanion.insert(
+        final user = UsersCompanion.insert(
           username: tfUserName.text, // pk
           balance: 0,
           createAt: DateTime.now(),
@@ -46,7 +45,7 @@ class LoginController extends BaseController {
     });
   }
 
-  _validation(Function onNext) {
+  void _validation(Function() onNext) {
     if (tfUserName.text.isBlank!) {
       snackBarError(message: 'Field Username harus diisi');
       return;

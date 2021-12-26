@@ -40,7 +40,6 @@ class ExTextFieldNormal extends StatelessWidget {
       borderType: VxTextFieldBorderType.roundLine,
       borderRadius: 8,
       borderColor: borderColor,
-      maxLine: 1,
       keyboardType: textInputType,
       textInputAction: textInputAction,
       onChanged: onChanged,

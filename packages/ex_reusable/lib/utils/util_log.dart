@@ -7,64 +7,62 @@ import 'package:logger/logger.dart';
 ///   date                  : 11 Jun 2021
 ///   —————————————————————————————————————————————————————————————————————————————
 
-var _tag = "GREDU LOG ->";
+String _tag = 'GREDU LOG ->';
 
 class GreduLog extends LogPrinter {
-  final String className;
-
   GreduLog(this.className);
+
+  final String className;
 
   @override
   List<String> log(LogEvent event) {
-    AnsiColor? color = PrettyPrinter.levelColors[event.level];
-    String? emoji = PrettyPrinter.levelEmojis[event.level];
-    return [color!('$emoji [$className] ${event.message}')];
+    final AnsiColor? color = PrettyPrinter.levelColors[event.level];
+    final String? emoji = PrettyPrinter.levelEmojis[event.level];
+    return <String>[
+      color!('$emoji [$className] ${event.message}'),
+    ];
   }
 }
 
-final _log = Logger(
+final Logger _log = Logger(
   filter: ProductionFilter(),
-  // output: ConsoleOutput(),
   printer: GreduLog(_tag),
 );
 
-log<T>(message) {
-  // if (kDebugMode) _log.d("$message");
+void log(String message) {
   debugPrint(message);
 }
 
-print<T>(message) {
-  // if (kDebugMode) _log.d("$message");
+void print(String message) {
   debugPrint(message, wrapWidth: 5000);
 }
 
-logD<T>(message) {
-  // if (kDebugMode) _log.d("$message");
+void logD(String message) {
   debugPrint(message, wrapWidth: 5000);
 }
 
-logE<T>(message) {
-  if (kDebugMode) _log.e("$message");
-  // debugPrint(message, wrapWidth: 5000);
+void logE(String message) {
+  if (kDebugMode) {
+    _log.e(message);
+  }
 }
 
-logI<T>(message) {
-  // if (kDebugMode) _log.i(message);
+void logI(String message) {
   debugPrint(message, wrapWidth: 5000);
 }
 
-logW<T>(message) {
-  if (kDebugMode) _log.w("$message");
-  // debugPrint(message, wrapWidth: 5000);
+void logW(String message) {
+  if (kDebugMode) {
+    _log.w(message);
+  }
 }
 
 String rupiahFormat(double d) {
   try {
-    final currencyFormatter = NumberFormat.currency(locale: 'ID');
+    final NumberFormat currencyFormatter = NumberFormat.currency(locale: 'ID');
     return currencyFormatter.format(d).replaceAll('IDR', 'Rp. ').replaceAll(',00', '');
   } catch (e) {
     return 'Rp. 0';
-
   }
 }
 
@@ -73,7 +71,10 @@ String rupiahFormat(double d) {
 // —————————————————————————————————————————————————————————————————————————
 extension LogStringExtension on String {
   void logX() => log(this);
+
   void logIX() => logI(this);
+
   void logEX() => logE(this);
+
   void logWX() => logW(this);
 }

@@ -14,10 +14,10 @@ extension StringToDateExtension on String {
   /// ---
   /// @param : format (optional)
   DateTime toDateEx({
-    String format = "yyyy-MM-ddTHH:mm:ssZ",
+    String format = 'yyyy-MM-ddTHH:mm:ssZ',
   }) {
     initializeDateFormatting('in');
-    var locale = 'in';
+    const String locale = 'in';
     return DateFormat(format, locale).parse(this);
   }
 }
@@ -27,11 +27,11 @@ extension DateToStringExtension on DateTime {
   /// ---
   /// @param : format (optional)
   String toStringEx({
-    String format = "yyyy-MM-ddTHH:mm:ssZ",
+    String format = 'yyyy-MM-ddTHH:mm:ssZ',
   }) {
     initializeDateFormatting('in');
-    var locale = 'in';
-    var output = DateFormat(format, locale).format(this);
+    const String locale = 'in';
+    final String output = DateFormat(format, locale).format(this);
     return output;
   }
 }
@@ -44,17 +44,17 @@ extension StringToDateFormatterExtension on String {
   /// return : if today -> hh:mm  => 18:20
   /// return : if yesterday -> hh:mm  => Kemarin
   String formatPastOrToday({
-    String format = "yyyy-MM-ddTHH:mm:ssZ",
+    String format = 'yyyy-MM-ddTHH:mm:ssZ',
   }) {
-    var output;
-    var resDate = this.toDateEx(format: format).toStringEx(format: "dd MMM");
-    var today = DateTime.now().toStringEx(format: "dd MMM");
-    var yesterday = (DateTime.now() - 1.days).toStringEx(format: "dd MMM");
+    String output;
+    final String resDate = toDateEx(format: format).toStringEx(format: 'dd MMM');
+    final String today = DateTime.now().toStringEx(format: 'dd MMM');
+    final String yesterday = (DateTime.now() - 1.days).toStringEx(format: 'dd MMM');
 
     if (resDate == today) {
-      output = (this.toDateEx(format: format) + 7.hours).toStringEx(format: "HH:mm");
+      output = (toDateEx(format: format) + 7.hours).toStringEx(format: 'HH:mm');
     } else if (resDate == yesterday) {
-      output = "Kemarin";
+      output = 'Kemarin';
     } else {
       output = resDate;
     }
@@ -62,13 +62,13 @@ extension StringToDateFormatterExtension on String {
   }
 
   String formatDate({
-    String format = "yyyy-MM-ddTHH:mm:ssZ",
-    String to = "dd MMM yyyy",
+    String format = 'yyyy-MM-ddTHH:mm:ssZ',
+    String to = 'dd MMM yyyy',
     int addHours = 0
   }) {
-    var output;
+    String output;
     try {
-      output = (this.toDateEx(format: format) + addHours.hours).toStringEx(format: to);
+      output = (toDateEx(format: format) + addHours.hours).toStringEx(format: to);
     } catch (e) {
       output = 'error';
     }

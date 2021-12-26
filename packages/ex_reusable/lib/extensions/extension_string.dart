@@ -10,23 +10,23 @@ enum DocumentType {
 
 extension StringExtension on String {
   /// input = aditya pratama | output = A
-  String get firstWord => length > 1 ? "${substring(0, 1).toUpperCase()}" : "";
+  String get firstWord => length > 1 ? substring(0, 1).toUpperCase() : '';
 
   /// input = aditya pratama kurniawan | output = AP
   String get initialName {
-    var splitW = this.split(" ");
-    var output = '';
+    final List<String> splitW = split(' ');
+    String output = '';
     try {
       if (splitW.length > 1) {
-        var fWord = splitW[0].substring(0, 1).toUpperCase();
-        var sWord = splitW[1].substring(0, 1).toUpperCase();
+        final String fWord = splitW[0].substring(0, 1).toUpperCase();
+        final String sWord = splitW[1].substring(0, 1).toUpperCase();
         output = fWord + sWord;
       } else {
-        var fWord = splitW[0].substring(0, 1).toUpperCase();
+        final String fWord = splitW[0].substring(0, 1).toUpperCase();
         output = fWord;
       }
     } catch (e) {
-      output = "-";
+      output = '-';
     }
     return output;
   }

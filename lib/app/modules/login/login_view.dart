@@ -1,19 +1,21 @@
 import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_atm/app/common/resource/_index.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../common/resource/_index.dart';
 import 'login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
+  const LoginView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: VStack([
-        '${lorem(paragraphs: 1, words: 2)}'.text.color(colorBlack).bold.size(20).make().marginOnly(bottom: 16),
+        lorem(paragraphs: 1, words: 2).text.color(colorBlack).bold.size(20).make().marginOnly(bottom: 16),
         '${lorem(paragraphs: 1, words: 15)}.'.text.color(colorGrey).size(14).make(),
         24.heightBox,
         ExTextFieldLabeled(tfController: controller.tfUserName, label: 'Username', hint: 'Username'),
@@ -26,11 +28,11 @@ class LoginView extends GetView<LoginController> {
         ),
         32.heightBox,
         HStack([
-          Divider(color: Color(0xffD8DCE0)).expand(),
-          ' atau '.text.color(Color(0xff676E76)).make().pOnly(left: 8, right: 8),
-          Divider(color: Color(0xffD8DCE0)).expand(),
+          const Divider(color: Color(0xffD8DCE0)).expand(),
+          ' atau '.text.color(const Color(0xff676E76)).make().pOnly(left: 8, right: 8),
+          const Divider(color: Color(0xffD8DCE0)).expand(),
         ]),
-        Container(
+        SizedBox(
           height: 100,
           width: double.infinity,
           child: Obx(() => ListView.builder(
@@ -40,7 +42,7 @@ class LoginView extends GetView<LoginController> {
                 return Center(
                   child: Container(
                     decoration: controller.commonBoxDecoration(radius: 90),
-                    child: '${controller.listUsers[i].username}'.text.make().p8().onInkTap(() {
+                    child: controller.listUsers[i].username.text.make().p8().onInkTap(() {
                       controller.tfUserName.text = controller.listUsers[i].username;
                     }),
                   ).p4(),
@@ -60,7 +62,7 @@ class LoginView extends GetView<LoginController> {
         //   ]),
         // ),
       ]).p24().scrollVertical(),
-      bottomSheet: Container(
+      bottomSheet: SizedBox(
         width: double.infinity,
         child: VStack([
           'made with ❤️ by flutter'.text.makeCentered(),

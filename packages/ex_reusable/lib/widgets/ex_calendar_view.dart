@@ -66,29 +66,29 @@ class ExCalendarView<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('in');
-    var locale = 'in';
+    const String locale = 'in';
     return TableCalendar<T>(
       locale: locale,
       headerStyle: HeaderStyle(
-        leftChevronIcon: Icon(Icons.chevron_left, color: Colors.orange),
-        rightChevronIcon: Icon(Icons.chevron_right, color: Colors.orange),
+        leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.orange),
+        rightChevronIcon: const Icon(Icons.chevron_right, color: Colors.orange),
         titleCentered: true,
-        titleTextStyle: TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
-        titleTextFormatter: (date, locale) => DateFormat.yMMMM(locale).format(date),
+        titleTextStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
+        titleTextFormatter: (DateTime date, locale) => DateFormat.yMMMM(locale).format(date),
         formatButtonVisible: false,
       ),
-      daysOfWeekStyle: DaysOfWeekStyle(
+      daysOfWeekStyle: const DaysOfWeekStyle(
         weekdayStyle: TextStyle(fontSize: 12),
         weekendStyle: TextStyle(fontSize: 12, color: Colors.red),
       ),
-      calendarStyle: CalendarStyle(
+      calendarStyle: const CalendarStyle(
         outsideDaysVisible: false,
         weekendTextStyle: TextStyle(fontSize: 12, color: Colors.red),
         defaultTextStyle: TextStyle(fontSize: 12),
         todayTextStyle: TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.bold),
         selectedTextStyle: TextStyle(fontSize: 12, color: Colors.white),
         markerSize: 5,
-        selectedDecoration: const BoxDecoration(
+        selectedDecoration: BoxDecoration(
           color: Color(0xFF72a065),
           shape: BoxShape.circle,
         ),
@@ -101,7 +101,7 @@ class ExCalendarView<T> extends StatelessWidget {
           shape: BoxShape.circle,
         ),
       ),
-      selectedDayPredicate: (day) => isSameDay(selectedDay, day),
+      selectedDayPredicate: (DateTime day) => isSameDay(selectedDay, day),
       firstDay: DateTime(2020),
       lastDay: DateTime(2030),
       focusedDay: focusedDay,
@@ -116,8 +116,7 @@ class ExCalendarView<T> extends StatelessWidget {
       onPageChanged: onPageChanged,
       onFormatChanged: onFormatChanged,
       onCalendarCreated: onCalendarCreated,
-      calendarFormat: CalendarFormat.month,
-      weekendDays: [DateTime.sunday],
+      weekendDays: const [DateTime.sunday],
       eventLoader: eventLoader,
       availableGestures: AvailableGestures.horizontalSwipe,
     );

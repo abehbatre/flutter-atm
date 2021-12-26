@@ -1,21 +1,26 @@
+// ignore_for_file: avoid_dynamic_calls, depend_on_referenced_packages
+
 import 'package:ex_reusable/ex_reusable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_atm/app/common/lifecycle/_index.dart';
-import 'package:flutter_atm/app/common/resource/_index.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../../common/lifecycle/_index.dart';
+import '../../common/resource/_index.dart';
 import 'home_controller.dart';
 import 'item_home_menu.dart';
 
 class HomeView extends GetView<HomeController> {
+  const HomeView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: controller.obx(
       (state) => buildUI().p24(),
-      onLoading: ExUiLoading(),
-      onError: (e) => ExUiErrorOrEmpty(message: "$e", showBtnRetry: true),
+      onLoading: const ExUiLoading(),
+      onError: (e) => ExUiErrorOrEmpty(message: '$e', showBtnRetry: true),
     ));
   }
 
@@ -43,13 +48,13 @@ class HomeView extends GetView<HomeController> {
       24.heightBox,
       HStack([
         Obx(() => '${controller.welcomeText}'.text.make()),
-        Spacer(),
-        IconButton(onPressed: () {}, icon: Icon(Icons.help)),
-        IconButton(onPressed: () {}, icon: Icon(Icons.notifications_none_outlined)),
+        const Spacer(),
+        IconButton(onPressed: () {}, icon: const Icon(Icons.help)),
+        IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_none_outlined)),
         // 16.widthBox,
       ]),
       VStack([
-        Obx(() => '${controller.dataUser.value.username}'.text.size(18).bold.uppercase.make()),
+        Obx(() => controller.dataUser.value.username.text.size(18).bold.uppercase.make()),
       ]),
       24.heightBox,
     ]);
@@ -57,12 +62,12 @@ class HomeView extends GetView<HomeController> {
 
   Obx buildListMenu() {
     return Obx(
-      () => Container(
+      () => SizedBox(
         height: 400,
         child: GridView.builder(
           itemCount: controller.menuList.length,
-          physics: NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 300,
             mainAxisExtent: 150,
             childAspectRatio: 2,
@@ -71,15 +76,15 @@ class HomeView extends GetView<HomeController> {
           ),
           itemBuilder: (BuildContext ctx, index) {
             return OpacityAnimation(
-              duration: Duration(milliseconds: 2000),
+              duration: const Duration(milliseconds: 2000),
               child: ItemHomeMenu(
-                id: controller.menuList[index]["id"],
-                icon: controller.menuList[index]["icon"],
-                label: controller.menuList[index]["label"],
-                badge: controller.menuList[index]["badge"],
+                id: controller.menuList[index]['id'] as int,
+                icon: controller.menuList[index]['icon'] as String,
+                label: controller.menuList[index]['label'] as String,
+                badge: controller.menuList[index]['badge'] as bool,
                 onPress: () => controller.menuItemClick(
-                  controller.menuList[index]["id"],
-                  controller.menuList[index]["label"],
+                  controller.menuList[index]['id']  as int,
+                  controller.menuList[index]['label'] as String,
                 ),
               ),
             );
@@ -106,10 +111,10 @@ class HomeView extends GetView<HomeController> {
         16.widthBox,
         Expanded(
           child: VStack([
-            Spacer(),
+            const Spacer(),
             'Saldo anda:'.text.size(16).bold.make().marginOnly(bottom: 4),
-            '${rupiahFormat(controller.dataUser.value.balance)}'.text.make(),
-            Spacer(),
+            rupiahFormat(controller.dataUser.value.balance).text.make(),
+            const Spacer(),
           ]),
         )
       ]).p12(),

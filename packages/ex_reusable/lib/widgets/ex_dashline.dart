@@ -1,3 +1,5 @@
+// ignore_for_file: always_specify_types
+
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -24,7 +26,7 @@ class ExDashLine extends StatelessWidget {
     return Column(
       children: [
         Center(
-          child: Container(
+          child: SizedBox(
             width: width ?? 30,
             height: 2,
             child: ExProgress(
@@ -34,9 +36,9 @@ class ExDashLine extends StatelessWidget {
             ),
           ),
         ),
-        HeightBox(3),
+        const HeightBox(3),
         Center(
-          child: Container(
+          child: SizedBox(
             width: width ?? 30,
             height: 2,
             child: ExProgress(

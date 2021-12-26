@@ -1,8 +1,8 @@
 import 'package:ex_reusable/ex_reusable.dart';
-import 'package:flutter_atm/app/constants/_shared_preference_key.dart';
-import 'package:flutter_atm/app/repository/local/database.dart';
 import 'package:get/get.dart';
 
+import '../../constants/_shared_preference_key.dart';
+import '../../repository/local/database.dart';
 import 'common_widgets.dart';
 import 'picker_widgets.dart';
 
@@ -14,17 +14,18 @@ import 'picker_widgets.dart';
 ///  write all methods which will be used on controller !
 
 abstract class BaseController extends GetxController with CommonWidgets, PickerWidgets {
-
   // DATABASE
-  final db = Get.find<MyDatabase>();
-  final dataUser = User(balance: 0, createAt: DateTime.now(), username: '').obs;
+  final MyDatabase db = Get.find<MyDatabase>();
+  final Rx<User> dataUser = User(balance: 0, createAt: DateTime.now(), username: '').obs;
 
-  getCurrentUser() async {
-    var currentUser = '';
-    try {currentUser = Get.arguments;}
-    catch (e) {currentUser = await pref.read(PREF_CURRENT_USER);}
-    logW("getCurrentUser : [$currentUser]");
-    db.getUserByUsername(currentUser).listen((user) => dataUser.value = user);
+  Future<void> getCurrentUser() async {
+    String? currentUser = '';
+    try {
+      currentUser = Get.arguments as String;
+    } catch (e) {
+      currentUser = pref.read(PREF_CURRENT_USER);
+    }
+    logW('getCurrentUser : [$currentUser]');
+    db.getUserByUsername(currentUser!).listen((User user) => dataUser.value = user);
   }
-
 }

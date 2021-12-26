@@ -13,12 +13,14 @@
 ///
 ///
 ///
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'package:flutter/widgets.dart';
 
 class ExIcons {
   ExIcons._();
 
-  static const _kFontFam = 'ExIcons';
+  static const String _kFontFam = 'ExIcons';
   static const String? _kFontPkg = null;
 
   static const IconData fi_rr_add = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);

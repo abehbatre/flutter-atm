@@ -8,39 +8,39 @@ import 'package:device_info/device_info.dart';
 ///   —————————————————————————————————————————————————————————————————————————————
 ///
 class DeviceInfo {
-  DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
+  final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
 
   Future<String> uuid() async {
-    String id = "unknown";
+    String id = 'unknown';
     if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await _deviceInfo.androidInfo;
+      final AndroidDeviceInfo androidInfo = await _deviceInfo.androidInfo;
       id = androidInfo.androidId;
     } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await _deviceInfo.iosInfo;
+      final IosDeviceInfo iosInfo = await _deviceInfo.iosInfo;
       id = iosInfo.identifierForVendor;
     }
     return id;
   }
 
   Future<String> name() async {
-    String name = "unknown";
+    String name = 'unknown';
     if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await _deviceInfo.androidInfo;
+      final AndroidDeviceInfo androidInfo = await _deviceInfo.androidInfo;
       name = androidInfo.model;
     } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await _deviceInfo.iosInfo;
+      final IosDeviceInfo iosInfo = await _deviceInfo.iosInfo;
       name = iosInfo.utsname.machine;
     }
     return name;
   }
 
   Future<String> type() async {
-    String type = "unknown";
+    String type = 'unknown';
     if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await _deviceInfo.androidInfo;
+      final AndroidDeviceInfo androidInfo = await _deviceInfo.androidInfo;
       type = androidInfo.type;
     } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await _deviceInfo.iosInfo;
+      final IosDeviceInfo iosInfo = await _deviceInfo.iosInfo;
       type = iosInfo.name;
     }
     return type;

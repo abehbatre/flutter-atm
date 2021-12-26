@@ -5,7 +5,7 @@
 ///   annotation class for scope versioning
 
 class Version {
+  const Version({this.version});
   final int? version; // Call Specify version
 
-  const Version({this.version});
 }

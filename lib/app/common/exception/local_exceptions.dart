@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
 
 class LocalException extends Equatable {
-  @override
-  List<Object?> get props => [];
+  const LocalException({
+    required this.message,
+  });
 
   final String message;
 
-  LocalException(this.message);
+  @override
+  List<Object?> get props => <Object>[];
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_atm/app/common/lifecycle/_index.dart';
-import 'package:flutter_atm/app/models/_key_val.dart';
-import 'package:flutter_atm/app/repository/local/database.dart';
 import 'package:get/get.dart';
+
+import '../../common/lifecycle/_index.dart';
+import '../../models/_key_val.dart';
+import '../../repository/local/database.dart';
 
 class TransferController extends BaseController {
   final tfInput = TextEditingController();
@@ -17,27 +18,27 @@ class TransferController extends BaseController {
     super.onInit();
   }
 
-  showBottomListUser() {
-    var listKV = <KeyVal>[];
-    listUsers.forEach((element) {
+  void showBottomListUser() {
+    final listKV = <KeyVal>[];
+    for (final element in listUsers) {
       // exclude current user >> todo : fix me, this ugly way.
       if (element.username != Get.arguments) {
         listKV.add(KeyVal(key: element, val: element.username));
       }
-    });
+    }
     bottomSheetListDialog(
         listKV: listKV,
         title: 'Daftar Pengguna',
         emptyMessage: 'belum ada data.',
         callback: (k, v) {
-          currentSelectedUserObject.value = k;
-          currentSelectedUserString.value = v;
+          currentSelectedUserObject.value = k as User;
+          currentSelectedUserString.value = v as String;
         });
   }
 
-  onSubmit() {
+  void onSubmit() {
     _validation(() async {
-      var amount = tfInput.text;
+      final amount = tfInput.text;
       await db.transfer(dataUser.value, currentSelectedUserObject.value, double.parse(amount)).then((value) {
         // reset state
         currentSelectedUserString.value = '-- Pilih Pengguna --';
@@ -52,13 +53,13 @@ class TransferController extends BaseController {
   // —————————————————————————————————————————————————————————————————————————
   // Private Func
   // —————————————————————————————————————————————————————————————————————————
-  _getListAllUser() async {
+  Future<void> _getListAllUser() async {
     await db.getListUser.then((value) => listUsers.assignAll(value)).catchError((e) {
       snackBarError(message: '$e');
     });
   }
 
-  _validation(Function onNext) {
+  void _validation(Function() onNext) {
     if (currentSelectedUserString.value.contains('-- Pilih Pengguna --')) {
       snackBarError(message: 'target pengguna harus dimasukkan');
       return;
