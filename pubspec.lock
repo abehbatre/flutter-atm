@@ -91,7 +91,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.6"
+    version: "2.1.7"
   build_runner_core:
     dependency: transitive
     description:
@@ -119,7 +119,7 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   charcode:
     dependency: transitive
     description:
@@ -224,14 +224,14 @@ packages:
       name: drift
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.1.1"
   drift_dev:
     dependency: "direct dev"
     description:
       name: drift_dev
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.1.1"
   equatable:
     dependency: "direct main"
     description:
@@ -252,7 +252,7 @@ packages:
       name: extended_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.1"
+    version: "6.0.1"
   extended_image_library:
     dependency: transitive
     description:
@@ -260,13 +260,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
-  fake_async:
-    dependency: transitive
-    description:
-      name: fake_async
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.0"
   faker:
     dependency: "direct main"
     description:
@@ -297,11 +290,6 @@ packages:
     version: "1.0.0"
   flutter:
     dependency: "direct main"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  flutter_driver:
-    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -346,12 +334,7 @@ packages:
       name: flutter_svg
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.22.0"
-  flutter_test:
-    dependency: "direct dev"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
+    version: "1.0.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -364,11 +347,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  fuchsia_remote_debug_protocol:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   get:
     dependency: "direct main"
     description:
@@ -396,7 +374,7 @@ packages:
       name: google_fonts
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   graphs:
     dependency: transitive
     description:
@@ -439,11 +417,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
-  integration_test:
-    dependency: "direct dev"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   intl:
     dependency: transitive
     description:
@@ -548,21 +521,21 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   path_drawing:
     dependency: transitive
     description:
       name: path_drawing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.1+1"
+    version: "1.0.0"
   path_parsing:
     dependency: transitive
     description:
       name: path_parsing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "1.0.0"
   path_provider:
     dependency: transitive
     description:
@@ -784,7 +757,7 @@ packages:
       name: sqlparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.18.1"
+    version: "0.19.0"
   stack_trace:
     dependency: transitive
     description:
@@ -813,13 +786,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  sync_http:
-    dependency: transitive
-    description:
-      name: sync_http
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   table_calendar:
     dependency: transitive
     description:
@@ -889,7 +855,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   velocity_x:
     dependency: "direct main"
     description:
@@ -925,13 +891,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  webdriver:
-    dependency: transitive
-    description:
-      name: webdriver
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   webkit_inspection_protocol:
     dependency: transitive
     description:
@@ -968,5 +927,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.14.0 <3.0.0"
-  flutter: ">=2.5.0"
+  dart: ">=2.15.0 <3.0.0"
+  flutter: ">=2.8.0"
